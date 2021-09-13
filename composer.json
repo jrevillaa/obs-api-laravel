@@ -1,0 +1,31 @@
+{
+    "authors": [
+        {
+            "name": "Jair Revilla",
+            "email": "jair.revilla@ativa.pe"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Obs\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Obs\\Tests": "tests"
+        }
+    },
+    "keywords": [
+        "huawei",
+        "obs",
+        "laravel",
+        "api"
+    ]
+    "description": "Api OBS adaptate to composer",
+    "license": "MIT",
+    "name": "jrevillaa/obs-api-zoom",
+    "require": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "type": "library"
+}
