@@ -19,5 +19,5 @@ namespace Obs\Internal\Common;
 
 interface ToArrayInterface
 {
-	public function toArray();
+    public function toArray();
 }

@@ -17,8 +17,9 @@
 
 namespace Obs\Internal\Resource;
 
-class Constants {
-    const ALLOWED_RESOURCE_PARAMTER_NAMES = [ 
+class Constants
+{
+    const ALLOWED_RESOURCE_PARAMTER_NAMES = [
             'acl',
             'policy',
             'torrent',
@@ -57,7 +58,7 @@ class Constants {
             'position',
             'x-oss-process'
     ];
-    const ALLOWED_REQUEST_HTTP_HEADER_METADATA_NAMES = [ 
+    const ALLOWED_REQUEST_HTTP_HEADER_METADATA_NAMES = [
             'content-type',
             'content-md5',
             'content-length',
@@ -84,7 +85,7 @@ class Constants {
 
             'success-action-redirect'
     ];
-    const ALLOWED_RESPONSE_HTTP_HEADER_METADATA_NAMES = [ 
+    const ALLOWED_RESPONSE_HTTP_HEADER_METADATA_NAMES = [
             'content-type',
             'content-md5',
             'content-length',
@@ -110,14 +111,15 @@ class Constants {
             'connection'
     ];
     
-    public static function selectConstants($signature) {
-        $signature = (strcasecmp ( $signature, 'obs' ) === 0) ? 'OBS' : 'V2';
+    public static function selectConstants($signature)
+    {
+        $signature = (strcasecmp($signature, 'obs') === 0) ? 'OBS' : 'V2';
         return __NAMESPACE__ . '\\' . $signature . 'Constants';
     }
     
-    public static function selectRequestResource($signature) {
-        $signature = (strcasecmp ( $signature, 'obs' ) === 0) ? 'OBS' : 'V2';
+    public static function selectRequestResource($signature)
+    {
+        $signature = (strcasecmp($signature, 'obs') === 0) ? 'OBS' : 'V2';
         return (__NAMESPACE__ . '\\' . $signature . 'RequestResource');
     }
-
 }

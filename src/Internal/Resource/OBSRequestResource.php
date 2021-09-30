@@ -17,105 +17,106 @@
 
 namespace Obs\Internal\Resource;
 
-class OBSRequestResource {
-    public static $RESOURCE_ARRAY = [ 
-            'operations' => [ 
-                    'createBucket' => [ 
+class OBSRequestResource
+{
+    public static $RESOURCE_ARRAY = [
+            'operations' => [
+                    'createBucket' => [
                             'httpMethod' => 'PUT',
-                            'data' => [ 
-                                    'xmlRoot' => [ 
+                            'data' => [
+                                    'xmlRoot' => [
                                             'name' => 'CreateBucketConfiguration'
                                     ]
                             ],
-                            'requestParameters' => [ 
-                                    'ACL' => [ 
+                            'requestParameters' => [
+                                    'ACL' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-acl',
                                             'transform' => 'aclHeader'
                                     ],
-                                    'Bucket' => [ 
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'LocationConstraint' => [ 
+                                    'LocationConstraint' => [
                                             'type' => 'string',
                                             'location' => 'xml',
                                             'sentAs' => 'Location'
                                     ],
-                                    'StorageClass' => [ 
+                                    'StorageClass' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-storage-class',
                                             'transform' => 'storageClass'
                                     ]
                             ],
-                            'responseParameters' => [ 
-                                    'Location' => [ 
+                            'responseParameters' => [
+                                    'Location' => [
                                             'type' => 'string',
                                             'location' => 'header'
                                     ],
-                                    'RequestId' => [ 
+                                    'RequestId' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-request-id'
                                     ]
                             ]
                     ],
 
-                    'listBuckets' => [ 
+                    'listBuckets' => [
                             'httpMethod' => 'GET',
-                            'responseParameters' => [ 
-                                    'Buckets' => [ 
+                            'responseParameters' => [
+                                    'Buckets' => [
                                             'type' => 'array',
                                             'location' => 'xml',
                                             'sentAs' => 'Buckets',
-                                            'items' => [ 
+                                            'items' => [
                                                     'name' => 'Bucket',
                                                     'type' => 'object',
                                                     'sentAs' => 'Bucket',
-                                                    'properties' => [ 
-                                                            'Name' => [ 
+                                                    'properties' => [
+                                                            'Name' => [
                                                                     'type' => 'string'
                                                             ],
-                                                            'CreationDate' => [ 
+                                                            'CreationDate' => [
                                                                     'type' => 'string'
                                                             ],
-                                                            'Location' => [ 
+                                                            'Location' => [
                                                                     'type' => 'string'
                                                             ]
                                                     ]
                                             ]
                                     ],
-                                    'Owner' => [ 
+                                    'Owner' => [
                                             'type' => 'object',
                                             'location' => 'xml',
-                                            'properties' => [ 
-                                                    'ID' => [ 
+                                            'properties' => [
+                                                    'ID' => [
                                                             'type' => 'string'
                                                     ]
                                             ]
                                     ],
-                                    'RequestId' => [ 
+                                    'RequestId' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-request-id'
                                     ]
                             ]
                     ],
 
-                    'deleteBucket' => [ 
+                    'deleteBucket' => [
                             'httpMethod' => 'DELETE',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -123,83 +124,83 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'listObjects' => [ 
+                    'listObjects' => [
                             'httpMethod' => 'GET',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Delimiter' => [ 
+                                    'Delimiter' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'delimiter'
                                     ],
-                                    'Marker' => [ 
+                                    'Marker' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'marker'
                                     ],
-                                    'MaxKeys' => [ 
+                                    'MaxKeys' => [
                                             'type' => 'numeric',
                                             'location' => 'query',
                                             'sentAs' => 'max-keys'
                                     ],
-                                    'Prefix' => [ 
+                                    'Prefix' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'prefix'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'IsTruncated' => [ 
+                                    'properties' => [
+                                            'IsTruncated' => [
                                                     'type' => 'boolean',
                                                     'location' => 'xml'
                                             ],
-                                            'Marker' => [ 
+                                            'Marker' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'NextMarker' => [ 
+                                            'NextMarker' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'Contents' => [ 
+                                            'Contents' => [
                                                     'type' => 'array',
                                                     'location' => 'xml',
                                                     'sentAs' => 'Contents',
-                                                    'data' => [ 
+                                                    'data' => [
                                                             'xmlFlattened' => true
                                                     ],
-                                                    'items' => [ 
+                                                    'items' => [
                                                             'name' => 'Object',
                                                             'type' => 'object',
-                                                            'properties' => [ 
-                                                                    'Key' => [ 
+                                                            'properties' => [
+                                                                    'Key' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'LastModified' => [ 
+                                                                    'LastModified' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'ETag' => [ 
+                                                                    'ETag' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Size' => [ 
+                                                                    'Size' => [
                                                                             'type' => 'integer'
                                                                     ],
-                                                                    'StorageClass' => [ 
+                                                                    'StorageClass' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Type' => [ 
+                                                                    'Type' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Owner' => [ 
+                                                                    'Owner' => [
                                                                             'type' => 'object',
-                                                                            'properties' => [ 
-                                                                                    'ID' => [ 
+                                                                            'properties' => [
+                                                                                    'ID' => [
                                                                                             'type' => 'string'
                                                                                     ]
                                                                             ]
@@ -207,43 +208,43 @@ class OBSRequestResource {
                                                             ]
                                                     ]
                                             ],
-                                            'Name' => [ 
+                                            'Name' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'Prefix' => [ 
+                                            'Prefix' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'Delimiter' => [ 
+                                            'Delimiter' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'MaxKeys' => [ 
+                                            'MaxKeys' => [
                                                     'type' => 'integer',
                                                     'location' => 'xml'
                                             ],
-                                            'CommonPrefixes' => [ 
+                                            'CommonPrefixes' => [
                                                     'type' => 'array',
                                                     'location' => 'xml',
-                                                    'data' => [ 
+                                                    'data' => [
                                                             'xmlFlattened' => true
                                                     ],
-                                                    'items' => [ 
+                                                    'items' => [
                                                             'name' => 'CommonPrefix',
                                                             'type' => 'object',
-                                                            'properties' => [ 
-                                                                    'Prefix' => [ 
+                                                            'properties' => [
+                                                                    'Prefix' => [
                                                                             'type' => 'string'
                                                                     ]
                                                             ]
                                                     ]
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ],
-                                            'Location' => [ 
+                                            'Location' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-bucket-location'
                                             ]
@@ -251,104 +252,104 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'listVersions' => [ 
+                    'listVersions' => [
                             'httpMethod' => 'GET',
                             'specialParam' => 'versions',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Delimiter' => [ 
+                                    'Delimiter' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'delimiter'
                                     ],
-                                    'KeyMarker' => [ 
+                                    'KeyMarker' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'key-marker'
                                     ],
-                                    'MaxKeys' => [ 
+                                    'MaxKeys' => [
                                             'type' => 'numeric',
                                             'location' => 'query',
                                             'sentAs' => 'max-keys'
                                     ],
-                                    'Prefix' => [ 
+                                    'Prefix' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'prefix'
                                     ],
-                                    'VersionIdMarker' => [ 
+                                    'VersionIdMarker' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'version-id-marker'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'IsTruncated' => [ 
+                                    'properties' => [
+                                            'IsTruncated' => [
                                                     'type' => 'boolean',
                                                     'location' => 'xml'
                                             ],
-                                            'KeyMarker' => [ 
+                                            'KeyMarker' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'VersionIdMarker' => [ 
+                                            'VersionIdMarker' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'NextKeyMarker' => [ 
+                                            'NextKeyMarker' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'NextVersionIdMarker' => [ 
+                                            'NextVersionIdMarker' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'Versions' => [ 
+                                            'Versions' => [
                                                     'type' => 'array',
                                                     'location' => 'xml',
                                                     'sentAs' => 'Version',
-                                                    'data' => [ 
+                                                    'data' => [
                                                             'xmlFlattened' => true
                                                     ],
-                                                    'items' => [ 
+                                                    'items' => [
                                                             'name' => 'ObjectVersion',
                                                             'type' => 'object',
                                                             'sentAs' => 'Version',
-                                                            'properties' => [ 
-                                                                    'ETag' => [ 
+                                                            'properties' => [
+                                                                    'ETag' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Size' => [ 
+                                                                    'Size' => [
                                                                             'type' => 'integer'
                                                                     ],
-                                                                    'StorageClass' => [ 
+                                                                    'StorageClass' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Key' => [ 
+                                                                    'Key' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'VersionId' => [ 
+                                                                    'VersionId' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'IsLatest' => [ 
+                                                                    'IsLatest' => [
                                                                             'type' => 'boolean'
                                                                     ],
-                                                                    'LastModified' => [ 
+                                                                    'LastModified' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Type' => [ 
+                                                                    'Type' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Owner' => [ 
+                                                                    'Owner' => [
                                                                             'type' => 'object',
-                                                                            'properties' => [ 
-                                                                                    'ID' => [ 
+                                                                            'properties' => [
+                                                                                    'ID' => [
                                                                                             'type' => 'string'
                                                                                     ]
                                                                             ]
@@ -356,78 +357,78 @@ class OBSRequestResource {
                                                             ]
                                                     ]
                                             ],
-                                            'DeleteMarkers' => [ 
+                                            'DeleteMarkers' => [
                                                     'type' => 'array',
                                                     'location' => 'xml',
                                                     'sentAs' => 'DeleteMarker',
-                                                    'data' => [ 
+                                                    'data' => [
                                                             'xmlFlattened' => true
                                                     ],
-                                                    'items' => [ 
+                                                    'items' => [
                                                             'name' => 'DeleteMarkerEntry',
                                                             'type' => 'object',
                                                             'sentAs' => 'DeleteMarker',
-                                                            'properties' => [ 
-                                                                    'Owner' => [ 
+                                                            'properties' => [
+                                                                    'Owner' => [
                                                                             'type' => 'object',
-                                                                            'properties' => [ 
-                                                                                    'ID' => [ 
+                                                                            'properties' => [
+                                                                                    'ID' => [
                                                                                             'type' => 'string'
                                                                                     ]
                                                                             ]
                                                                     ],
-                                                                    'Key' => [ 
+                                                                    'Key' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'VersionId' => [ 
+                                                                    'VersionId' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'IsLatest' => [ 
+                                                                    'IsLatest' => [
                                                                             'type' => 'boolean'
                                                                     ],
-                                                                    'LastModified' => [ 
+                                                                    'LastModified' => [
                                                                             'type' => 'string'
                                                                     ]
                                                             ]
                                                     ]
                                             ],
-                                            'Name' => [ 
+                                            'Name' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'Prefix' => [ 
+                                            'Prefix' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'Delimiter' => [ 
+                                            'Delimiter' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'MaxKeys' => [ 
+                                            'MaxKeys' => [
                                                     'type' => 'integer',
                                                     'location' => 'xml'
                                             ],
-                                            'CommonPrefixes' => [ 
+                                            'CommonPrefixes' => [
                                                     'type' => 'array',
                                                     'location' => 'xml',
-                                                    'data' => [ 
+                                                    'data' => [
                                                             'xmlFlattened' => true
                                                     ],
-                                                    'items' => [ 
+                                                    'items' => [
                                                             'name' => 'CommonPrefix',
                                                             'type' => 'object',
-                                                            'properties' => [ 
-                                                                    'Prefix' => [ 
+                                                            'properties' => [
+                                                                    'Prefix' => [
                                                                             'type' => 'string'
                                                                     ]
                                                             ]
                                                     ]
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ],
-                                            'Location' => [ 
+                                            'Location' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-bucket-location'
                                             ]
@@ -435,82 +436,82 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'getBucketMetadata' => [ 
+                    'getBucketMetadata' => [
                             'httpMethod' => 'HEAD',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Origin' => [ 
+                                    'Origin' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'Origin'
                                     ],
-                                    'RequestHeader' => [ 
+                                    'RequestHeader' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'Access-Control-Request-Headers'
                                     ]
                             ],
-                            'responseParameters' => [ 
-                                    'RequestId' => [ 
+                            'responseParameters' => [
+                                    'RequestId' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-request-id'
                                     ],
-                                    'StorageClass' => [ 
+                                    'StorageClass' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-storage-class'
                                     ],
 
-                                    'Location' => [ 
+                                    'Location' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-bucket-location'
                                     ],
 
-                                    'AllowOrigin' => [ 
+                                    'AllowOrigin' => [
                                             'location' => 'header',
                                             'sentAs' => 'access-control-allow-origin'
                                     ],
-                                    'MaxAgeSeconds' => [ 
+                                    'MaxAgeSeconds' => [
                                             'location' => 'header',
                                             'sentAs' => 'access-control-max-age',
                                             'type' => 'integer'
                                     ],
-                                    'ExposeHeader' => [ 
+                                    'ExposeHeader' => [
                                             'location' => 'header',
                                             'sentAs' => 'access-control-expose-headers'
                                     ],
-                                    'AllowMethod' => [ 
+                                    'AllowMethod' => [
                                             'location' => 'header',
                                             'sentAs' => 'access-control-allow-methods'
                                     ],
-                                    'AllowHeader' => [ 
+                                    'AllowHeader' => [
                                             'location' => 'header',
                                             'sentAs' => 'access-control-allow-headers'
                                     ]
                             ]
                     ],
 
-                    'getBucketLocation' => [ 
+                    'getBucketLocation' => [
                             'httpMethod' => 'GET',
                             'specialParam' => 'location',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'Location' => [ 
+                                    'properties' => [
+                                            'Location' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -518,29 +519,29 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'getBucketStorageInfo' => [ 
+                    'getBucketStorageInfo' => [
                             'httpMethod' => 'GET',
                             'specialParam' => 'storageinfo',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'Size' => [ 
+                                    'properties' => [
+                                            'Size' => [
                                                     'type' => 'numeric',
                                                     'location' => 'xml',
                                                     'sentAs' => 'Size'
                                             ],
-                                            'ObjectNumber' => [ 
+                                            'ObjectNumber' => [
                                                     'type' => 'integer',
                                                     'location' => 'xml'
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -548,30 +549,30 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'setBucketQuota' => [ 
+                    'setBucketQuota' => [
                             'httpMethod' => 'PUT',
                             'specialParam' => 'quota',
-                            'data' => [ 
-                                    'xmlRoot' => [ 
+                            'data' => [
+                                    'xmlRoot' => [
                                             'name' => 'Quota'
                                     ]
                             ],
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'StorageQuota' => [ 
+                                    'StorageQuota' => [
                                             'required' => true,
                                             'type' => 'numeric',
                                             'location' => 'xml'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -579,25 +580,25 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'getBucketQuota' => [ 
+                    'getBucketQuota' => [
                             'httpMethod' => 'GET',
                             'specialParam' => 'quota',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'StorageQuota' => [ 
+                                    'properties' => [
+                                            'StorageQuota' => [
                                                     'type' => 'integer',
                                                     'location' => 'xml',
                                                     'sentAs' => 'StorageQuota'
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -605,34 +606,34 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'setBucketStoragePolicy' => [ 
+                    'setBucketStoragePolicy' => [
                             'httpMethod' => 'PUT',
                             'specialParam' => 'storageClass',
-                            'data' => [ 
-                                    'xmlRoot' => [ 
+                            'data' => [
+                                    'xmlRoot' => [
                                             'name' => 'StorageClass'
                                     ]
                             ],
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'StorageClass' => [ 
+                                    'StorageClass' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'xml',
                                             'transform' => 'storageClass',
-                                            'data' => [ 
+                                            'data' => [
                                                     'xmlFlattened' => true
                                             ]
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -640,24 +641,24 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'getBucketStoragePolicy' => [ 
+                    'getBucketStoragePolicy' => [
                             'httpMethod' => 'GET',
                             'specialParam' => 'storagePolicy',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'StorageClass' => [ 
+                                    'properties' => [
+                                            'StorageClass' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -665,92 +666,92 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'setBucketAcl' => [ 
+                    'setBucketAcl' => [
                             'httpMethod' => 'PUT',
                             'specialParam' => 'acl',
-                            'data' => [ 
-                                    'xmlRoot' => [ 
+                            'data' => [
+                                    'xmlRoot' => [
                                             'name' => 'AccessControlPolicy'
                                     ]
                             ],
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'ACL' => [ 
+                                    'ACL' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-acl',
                                             'transform' => 'aclHeader'
                                     ],
-                                    'GrantRead' => [ 
+                                    'GrantRead' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-grant-read'
                                     ],
-                                    'GrantWrite' => [ 
+                                    'GrantWrite' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-grant-write'
                                     ],
-                                    'GrantReadAcp' => [ 
+                                    'GrantReadAcp' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-grant-read-acp'
                                     ],
-                                    'GrantWriteAcp' => [ 
+                                    'GrantWriteAcp' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-grant-write-acp'
                                     ],
-                                    'GrantFullControl' => [ 
+                                    'GrantFullControl' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-grant-full-control'
                                     ],
-                                    'GrantDeliveryRead' => [ 
+                                    'GrantDeliveryRead' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-grant-read-delivered'
                                     ],
-                                    'GrantDeliveryFullControl' => [ 
+                                    'GrantDeliveryFullControl' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-grant-full-control-delivered'
                                     ],
-                                    'Owner' => [ 
+                                    'Owner' => [
                                             'type' => 'object',
                                             'location' => 'xml',
-                                            'properties' => [ 
-                                                    'ID' => [ 
+                                            'properties' => [
+                                                    'ID' => [
                                                             'type' => 'string'
                                                     ]
                                             ]
                                     ],
-                                    'Grants' => [ 
+                                    'Grants' => [
                                             'type' => 'array',
                                             'location' => 'xml',
                                             'sentAs' => 'AccessControlList',
-                                            'items' => [ 
+                                            'items' => [
                                                     'name' => 'Grant',
                                                     'type' => 'object',
-                                                    'properties' => [ 
-                                                            'Grantee' => [ 
+                                                    'properties' => [
+                                                            'Grantee' => [
                                                                     'type' => 'object',
-                                                                    'properties' => [ 
-                                                                            'ID' => [ 
+                                                                    'properties' => [
+                                                                            'ID' => [
                                                                                     'type' => 'string'
                                                                             ],
-                                                                            'URI' => [ 
+                                                                            'URI' => [
                                                                                     'type' => 'string',
                                                                                     'sentAs' => 'Canned',
                                                                                     'transform' => 'aclUri'
                                                                             ]
                                                                     ]
                                                             ],
-                                                            'Permission' => [ 
+                                                            'Permission' => [
                                                                     'type' => 'string'
                                                             ],
                                                             'Delivered' => [
@@ -760,10 +761,10 @@ class OBSRequestResource {
                                             ]
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -771,57 +772,57 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'getBucketAcl' => [ 
+                    'getBucketAcl' => [
                             'httpMethod' => 'GET',
                             'specialParam' => 'acl',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ],
-                                            'Owner' => [ 
+                                            'Owner' => [
                                                     'type' => 'object',
                                                     'location' => 'xml',
-                                                    'properties' => [ 
-                                                            'ID' => [ 
+                                                    'properties' => [
+                                                            'ID' => [
                                                                     'type' => 'string'
                                                             ]
                                                     ]
                                             ],
-                                            'Grants' => [ 
+                                            'Grants' => [
                                                     'type' => 'array',
                                                     'location' => 'xml',
                                                     'sentAs' => 'AccessControlList',
-                                                    'items' => [ 
+                                                    'items' => [
                                                             'name' => 'Grant',
                                                             'type' => 'object',
                                                             'sentAs' => 'Grant',
-                                                            'properties' => [ 
-                                                                    'Grantee' => [ 
+                                                            'properties' => [
+                                                                    'Grantee' => [
                                                                             'type' => 'object',
-                                                                            'properties' => [ 
-                                                                                    'ID' => [ 
+                                                                            'properties' => [
+                                                                                    'ID' => [
                                                                                             'type' => 'string'
                                                                                     ],
-                                                                                    'URI' => [ 
+                                                                                    'URI' => [
                                                                                             'type' => 'string',
                                                                                             'sentAs' => 'Canned'
                                                                                     ]
                                                                             ]
                                                                     ],
-                                                                    'Permission' => [ 
+                                                                    'Permission' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Delivered' => [ 
+                                                                    'Delivered' => [
                                                                             'type' => 'boolean'
                                                                     ]
                                                             ]
@@ -831,17 +832,17 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'setBucketLoggingConfiguration' => [ 
+                    'setBucketLoggingConfiguration' => [
                             'httpMethod' => 'PUT',
                             'specialParam' => 'logging',
-                            'data' => [ 
-                                    'xmlRoot' => [ 
+                            'data' => [
+                                    'xmlRoot' => [
                                             'name' => 'BucketLoggingStatus'
                                     ],
                                     'xmlAllowEmpty' => true
                             ],
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
@@ -850,36 +851,36 @@ class OBSRequestResource {
                                             'type' => 'string',
                                             'location' => 'xml'
                                     ],
-                                    'LoggingEnabled' => [ 
+                                    'LoggingEnabled' => [
                                             'type' => 'object',
                                             'location' => 'xml',
-                                            'properties' => [ 
-                                                    'TargetBucket' => [ 
+                                            'properties' => [
+                                                    'TargetBucket' => [
                                                             'type' => 'string'
                                                     ],
-                                                    'TargetPrefix' => [ 
+                                                    'TargetPrefix' => [
                                                             'type' => 'string'
                                                     ],
-                                                    'TargetGrants' => [ 
+                                                    'TargetGrants' => [
                                                             'type' => 'array',
-                                                            'items' => [ 
+                                                            'items' => [
                                                                     'name' => 'Grant',
                                                                     'type' => 'object',
-                                                                    'properties' => [ 
-                                                                            'Grantee' => [ 
+                                                                    'properties' => [
+                                                                            'Grantee' => [
                                                                                     'type' => 'object',
-                                                                                    'properties' => [ 
-                                                                                            'ID' => [ 
+                                                                                    'properties' => [
+                                                                                            'ID' => [
                                                                                                     'type' => 'string'
                                                                                             ],
-                                                                                            'URI' => [ 
+                                                                                            'URI' => [
                                                                                                     'type' => 'string',
                                                                                                     'sentAs' => 'Canned',
                                                                                                     'transform' => 'aclUri'
                                                                                             ]
                                                                                     ]
                                                                             ],
-                                                                            'Permission' => [ 
+                                                                            'Permission' => [
                                                                                     'type' => 'string'
                                                                             ]
                                                                     ]
@@ -888,10 +889,10 @@ class OBSRequestResource {
                                             ]
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -899,62 +900,62 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'getBucketLoggingConfiguration' => [ 
+                    'getBucketLoggingConfiguration' => [
                             'httpMethod' => 'GET',
                             'specialParam' => 'logging',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
                                     'properties' => [
                                             'Agency' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'LoggingEnabled' => [ 
+                                            'LoggingEnabled' => [
                                                     'type' => 'object',
                                                     'location' => 'xml',
-                                                    'properties' => [ 
-                                                            'TargetBucket' => [ 
+                                                    'properties' => [
+                                                            'TargetBucket' => [
                                                                     'type' => 'string'
                                                             ],
-                                                            'TargetGrants' => [ 
+                                                            'TargetGrants' => [
                                                                     'type' => 'array',
                                                                     'sentAs' => 'TargetGrants',
-                                                                    'items' => [ 
+                                                                    'items' => [
                                                                             'name' => 'Grant',
                                                                             'type' => 'object',
                                                                             'sentAs' => 'Grant',
-                                                                            'properties' => [ 
-                                                                                    'Grantee' => [ 
+                                                                            'properties' => [
+                                                                                    'Grantee' => [
                                                                                             'type' => 'object',
-                                                                                            'properties' => [ 
-                                                                                                    'ID' => [ 
+                                                                                            'properties' => [
+                                                                                                    'ID' => [
                                                                                                             'type' => 'string'
                                                                                                     ],
-                                                                                                    'URI' => [ 
+                                                                                                    'URI' => [
                                                                                                             'type' => 'string',
                                                                                                             'sentAs' => 'Canned'
                                                                                                     ]
                                                                                             ]
                                                                                     ],
-                                                                                    'Permission' => [ 
+                                                                                    'Permission' => [
                                                                                             'type' => 'string'
                                                                                     ]
                                                                             ]
                                                                     ]
                                                             ],
-                                                            'TargetPrefix' => [ 
+                                                            'TargetPrefix' => [
                                                                     'type' => 'string'
                                                             ]
                                                     ]
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -1031,25 +1032,25 @@ class OBSRequestResource {
                         ]
                     ],
 
-                    'setBucketPolicy' => [ 
+                    'setBucketPolicy' => [
                             'httpMethod' => 'PUT',
                             'specialParam' => 'policy',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Policy' => [ 
+                                    'Policy' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'body'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -1057,24 +1058,24 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'getBucketPolicy' => [ 
+                    'getBucketPolicy' => [
                             'httpMethod' => 'GET',
                             'specialParam' => 'policy',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'Policy' => [ 
+                                    'properties' => [
+                                            'Policy' => [
                                                     'type' => 'string',
                                                     'location' => 'body'
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -1143,20 +1144,20 @@ class OBSRequestResource {
                         ]
                     ],
 
-                    'deleteBucketPolicy' => [ 
+                    'deleteBucketPolicy' => [
                             'httpMethod' => 'DELETE',
                             'specialParam' => 'policy',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -1164,107 +1165,107 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'setBucketLifecycleConfiguration' => [ 
+                    'setBucketLifecycleConfiguration' => [
                             'httpMethod' => 'PUT',
                             'specialParam' => 'lifecycle',
-                            'data' => [ 
-                                    'xmlRoot' => [ 
+                            'data' => [
+                                    'xmlRoot' => [
                                             'name' => 'LifecycleConfiguration'
                                     ],
                                     'contentMd5' => true
                             ],
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Rules' => [ 
+                                    'Rules' => [
                                             'required' => true,
                                             'type' => 'array',
                                             'location' => 'xml',
                                             'sentAs' => 'Rule',
-                                            'data' => [ 
+                                            'data' => [
                                                     'xmlFlattened' => true
                                             ],
-                                            'items' => [ 
+                                            'items' => [
                                                     'name' => 'Rule',
                                                     'type' => 'object',
                                                     'sentAs' => 'Rule',
-                                                    'properties' => [ 
-                                                            'Transitions' => [ 
+                                                    'properties' => [
+                                                            'Transitions' => [
                                                                     'type' => 'array',
                                                                     'sentAs' => 'Transition',
-                                                                    'data' => [ 
+                                                                    'data' => [
                                                                             'xmlFlattened' => true
                                                                     ],
-                                                                    'items' => [ 
+                                                                    'items' => [
                                                                             'type' => 'object',
                                                                             'sentAs' => 'Transition',
-                                                                            'properties' => [ 
-                                                                                    'StorageClass' => [ 
+                                                                            'properties' => [
+                                                                                    'StorageClass' => [
                                                                                             'type' => 'string',
                                                                                             'transform' => 'storageClass'
                                                                                     ],
-                                                                                    'Date' => [ 
+                                                                                    'Date' => [
                                                                                             'type' => 'string',
                                                                                             'format' => 'date-time-middle'
                                                                                     ],
-                                                                                    'Days' => [ 
+                                                                                    'Days' => [
                                                                                             'type' => 'numeric'
                                                                                     ]
                                                                             ]
                                                                     ]
                                                             ],
-                                                            'Expiration' => [ 
+                                                            'Expiration' => [
                                                                     'type' => 'object',
-                                                                    'properties' => [ 
-                                                                            'Date' => [ 
+                                                                    'properties' => [
+                                                                            'Date' => [
                                                                                     'type' => 'string',
                                                                                     'format' => 'date-time-middle'
                                                                             ],
-                                                                            'Days' => [ 
+                                                                            'Days' => [
                                                                                     'type' => 'numeric'
                                                                             ]
                                                                     ]
                                                             ],
-                                                            'NoncurrentVersionTransitions' => [ 
+                                                            'NoncurrentVersionTransitions' => [
                                                                     'type' => 'array',
                                                                     'sentAs' => 'NoncurrentVersionTransition',
-                                                                    'data' => [ 
+                                                                    'data' => [
                                                                             'xmlFlattened' => true
                                                                     ],
-                                                                    'items' => [ 
+                                                                    'items' => [
                                                                             'type' => 'object',
                                                                             'sentAs' => 'NoncurrentVersionTransition',
-                                                                            'properties' => [ 
-                                                                                    'StorageClass' => [ 
+                                                                            'properties' => [
+                                                                                    'StorageClass' => [
                                                                                             'type' => 'string',
                                                                                             'transform' => 'storageClass'
                                                                                     ],
-                                                                                    'NoncurrentDays' => [ 
+                                                                                    'NoncurrentDays' => [
                                                                                             'type' => 'numeric'
                                                                                     ]
                                                                             ]
                                                                     ]
                                                             ],
-                                                            'NoncurrentVersionExpiration' => [ 
+                                                            'NoncurrentVersionExpiration' => [
                                                                     'type' => 'object',
-                                                                    'properties' => [ 
-                                                                            'NoncurrentDays' => [ 
+                                                                    'properties' => [
+                                                                            'NoncurrentDays' => [
                                                                                     'type' => 'numeric'
                                                                             ]
                                                                     ]
                                                             ],
-                                                            'ID' => [ 
+                                                            'ID' => [
                                                                     'type' => 'string'
                                                             ],
-                                                            'Prefix' => [ 
+                                                            'Prefix' => [
                                                                     'required' => true,
                                                                     'type' => 'string',
                                                                     'canEmpty' => true
                                                             ],
-                                                            'Status' => [ 
+                                                            'Status' => [
                                                                     'required' => true,
                                                                     'type' => 'string'
                                                             ]
@@ -1272,10 +1273,10 @@ class OBSRequestResource {
                                             ]
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -1283,103 +1284,103 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'getBucketLifecycleConfiguration' => [ 
+                    'getBucketLifecycleConfiguration' => [
                             'httpMethod' => 'GET',
                             'specialParam' => 'lifecycle',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ],
-                                            'Rules' => [ 
+                                            'Rules' => [
                                                     'type' => 'array',
                                                     'location' => 'xml',
                                                     'sentAs' => 'Rule',
-                                                    'data' => [ 
+                                                    'data' => [
                                                             'xmlFlattened' => true
                                                     ],
-                                                    'items' => [ 
+                                                    'items' => [
                                                             'name' => 'Rule',
                                                             'type' => 'object',
                                                             'sentAs' => 'Rule',
-                                                            'properties' => [ 
-                                                                    'Transitions' => [ 
+                                                            'properties' => [
+                                                                    'Transitions' => [
                                                                             'type' => 'array',
                                                                             'sentAs' => 'Transition',
-                                                                            'data' => [ 
+                                                                            'data' => [
                                                                                     'xmlFlattened' => true
                                                                             ],
-                                                                            'items' => [ 
+                                                                            'items' => [
                                                                                     'type' => 'object',
                                                                                     'sentAs' => 'Transition',
-                                                                                    'properties' => [ 
-                                                                                            'StorageClass' => [ 
+                                                                                    'properties' => [
+                                                                                            'StorageClass' => [
                                                                                                     'type' => 'string'
                                                                                             ],
-                                                                                            'Date' => [ 
+                                                                                            'Date' => [
                                                                                                     'type' => 'string',
                                                                                                     'format' => 'date-time-middle'
                                                                                             ],
-                                                                                            'Days' => [ 
+                                                                                            'Days' => [
                                                                                                     'type' => 'numeric'
                                                                                             ]
                                                                                     ]
                                                                             ]
                                                                     ],
-                                                                    'Expiration' => [ 
+                                                                    'Expiration' => [
                                                                             'type' => 'object',
-                                                                            'properties' => [ 
-                                                                                    'Date' => [ 
+                                                                            'properties' => [
+                                                                                    'Date' => [
                                                                                             'type' => 'string'
                                                                                     ],
-                                                                                    'Days' => [ 
+                                                                                    'Days' => [
                                                                                             'type' => 'integer'
                                                                                     ]
                                                                             ]
                                                                     ],
-                                                                    'NoncurrentVersionTransitions' => [ 
+                                                                    'NoncurrentVersionTransitions' => [
                                                                             'type' => 'array',
                                                                             'sentAs' => 'NoncurrentVersionTransition',
-                                                                            'data' => [ 
+                                                                            'data' => [
                                                                                     'xmlFlattened' => true
                                                                             ],
-                                                                            'items' => [ 
+                                                                            'items' => [
                                                                                     'type' => 'object',
                                                                                     'sentAs' => 'NoncurrentVersionTransition',
-                                                                                    'properties' => [ 
-                                                                                            'StorageClass' => [ 
+                                                                                    'properties' => [
+                                                                                            'StorageClass' => [
                                                                                                     'type' => 'string'
                                                                                             ],
-                                                                                            'NoncurrentDays' => [ 
+                                                                                            'NoncurrentDays' => [
                                                                                                     'type' => 'numeric'
                                                                                             ]
                                                                                     ]
                                                                             ]
                                                                     ],
-                                                                    'NoncurrentVersionExpiration' => [ 
+                                                                    'NoncurrentVersionExpiration' => [
                                                                             'type' => 'object',
-                                                                            'properties' => [ 
-                                                                                    'NoncurrentDays' => [ 
+                                                                            'properties' => [
+                                                                                    'NoncurrentDays' => [
                                                                                             'type' => 'integer'
                                                                                     ]
                                                                             ]
                                                                     ],
-                                                                    'ID' => [ 
+                                                                    'ID' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Prefix' => [ 
+                                                                    'Prefix' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Status' => [ 
+                                                                    'Status' => [
                                                                             'type' => 'string'
                                                                     ]
                                                             ]
@@ -1389,20 +1390,20 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'deleteBucketLifecycleConfiguration' => [ 
+                    'deleteBucketLifecycleConfiguration' => [
                             'httpMethod' => 'DELETE',
                             'specialParam' => 'lifecycle',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -1410,88 +1411,88 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'setBucketWebsiteConfiguration' => [ 
+                    'setBucketWebsiteConfiguration' => [
                             'httpMethod' => 'PUT',
                             'specialParam' => 'website',
-                            'data' => [ 
-                                    'xmlRoot' => [ 
+                            'data' => [
+                                    'xmlRoot' => [
                                             'name' => 'WebsiteConfiguration'
                                     ]
                             ],
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'ErrorDocument' => [ 
+                                    'ErrorDocument' => [
                                             'type' => 'object',
                                             'location' => 'xml',
-                                            'properties' => [ 
-                                                    'Key' => [ 
+                                            'properties' => [
+                                                    'Key' => [
                                                             'required' => true,
                                                             'type' => 'string'
                                                     ]
                                             ]
                                     ],
-                                    'IndexDocument' => [ 
+                                    'IndexDocument' => [
                                             'type' => 'object',
                                             'location' => 'xml',
-                                            'properties' => [ 
-                                                    'Suffix' => [ 
+                                            'properties' => [
+                                                    'Suffix' => [
                                                             'required' => true,
                                                             'type' => 'string'
                                                     ]
                                             ]
                                     ],
-                                    'RedirectAllRequestsTo' => [ 
+                                    'RedirectAllRequestsTo' => [
                                             'type' => 'object',
                                             'location' => 'xml',
-                                            'properties' => [ 
-                                                    'HostName' => [ 
+                                            'properties' => [
+                                                    'HostName' => [
                                                             'required' => true,
                                                             'type' => 'string'
                                                     ],
-                                                    'Protocol' => [ 
+                                                    'Protocol' => [
                                                             'type' => 'string'
                                                     ]
                                             ]
                                     ],
-                                    'RoutingRules' => [ 
+                                    'RoutingRules' => [
                                             'type' => 'array',
                                             'location' => 'xml',
-                                            'items' => [ 
+                                            'items' => [
                                                     'name' => 'RoutingRule',
                                                     'type' => 'object',
-                                                    'properties' => [ 
-                                                            'Condition' => [ 
+                                                    'properties' => [
+                                                            'Condition' => [
                                                                     'type' => 'object',
-                                                                    'properties' => [ 
-                                                                            'HttpErrorCodeReturnedEquals' => [ 
+                                                                    'properties' => [
+                                                                            'HttpErrorCodeReturnedEquals' => [
                                                                                     'type' => 'numeric'
                                                                             ],
-                                                                            'KeyPrefixEquals' => [ 
+                                                                            'KeyPrefixEquals' => [
                                                                                     'type' => 'string'
                                                                             ]
                                                                     ]
                                                             ],
-                                                            'Redirect' => [ 
+                                                            'Redirect' => [
                                                                     'required' => true,
                                                                     'type' => 'object',
-                                                                    'properties' => [ 
-                                                                            'HostName' => [ 
+                                                                    'properties' => [
+                                                                            'HostName' => [
                                                                                     'type' => 'string'
                                                                             ],
-                                                                            'HttpRedirectCode' => [ 
+                                                                            'HttpRedirectCode' => [
                                                                                     'type' => 'numeric'
                                                                             ],
-                                                                            'Protocol' => [ 
+                                                                            'Protocol' => [
                                                                                     'type' => 'string'
                                                                             ],
-                                                                            'ReplaceKeyPrefixWith' => [ 
+                                                                            'ReplaceKeyPrefixWith' => [
                                                                                     'type' => 'string'
                                                                             ],
-                                                                            'ReplaceKeyWith' => [ 
+                                                                            'ReplaceKeyWith' => [
                                                                                     'type' => 'string'
                                                                             ]
                                                                     ]
@@ -1500,10 +1501,10 @@ class OBSRequestResource {
                                             ]
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -1511,88 +1512,88 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'getBucketWebsiteConfiguration' => [ 
+                    'getBucketWebsiteConfiguration' => [
                             'httpMethod' => 'GET',
                             'specialParam' => 'website',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ],
-                                            'RedirectAllRequestsTo' => [ 
+                                            'RedirectAllRequestsTo' => [
                                                     'type' => 'object',
                                                     'location' => 'xml',
-                                                    'properties' => [ 
-                                                            'HostName' => [ 
+                                                    'properties' => [
+                                                            'HostName' => [
                                                                     'type' => 'string'
                                                             ],
-                                                            'Protocol' => [ 
+                                                            'Protocol' => [
                                                                     'type' => 'string'
                                                             ]
                                                     ]
                                             ],
-                                            'IndexDocument' => [ 
+                                            'IndexDocument' => [
                                                     'type' => 'object',
                                                     'location' => 'xml',
-                                                    'properties' => [ 
-                                                            'Suffix' => [ 
+                                                    'properties' => [
+                                                            'Suffix' => [
                                                                     'type' => 'string'
                                                             ]
                                                     ]
                                             ],
-                                            'ErrorDocument' => [ 
+                                            'ErrorDocument' => [
                                                     'type' => 'object',
                                                     'location' => 'xml',
-                                                    'properties' => [ 
-                                                            'Key' => [ 
+                                                    'properties' => [
+                                                            'Key' => [
                                                                     'type' => 'string'
                                                             ]
                                                     ]
                                             ],
-                                            'RoutingRules' => [ 
+                                            'RoutingRules' => [
                                                     'type' => 'array',
                                                     'location' => 'xml',
-                                                    'items' => [ 
+                                                    'items' => [
                                                             'name' => 'RoutingRule',
                                                             'type' => 'object',
                                                             'sentAs' => 'RoutingRule',
-                                                            'properties' => [ 
-                                                                    'Condition' => [ 
+                                                            'properties' => [
+                                                                    'Condition' => [
                                                                             'type' => 'object',
-                                                                            'properties' => [ 
-                                                                                    'HttpErrorCodeReturnedEquals' => [ 
+                                                                            'properties' => [
+                                                                                    'HttpErrorCodeReturnedEquals' => [
                                                                                             'type' => 'integer'
                                                                                     ],
-                                                                                    'KeyPrefixEquals' => [ 
+                                                                                    'KeyPrefixEquals' => [
                                                                                             'type' => 'string'
                                                                                     ]
                                                                             ]
                                                                     ],
-                                                                    'Redirect' => [ 
+                                                                    'Redirect' => [
                                                                             'type' => 'object',
-                                                                            'properties' => [ 
-                                                                                    'HostName' => [ 
+                                                                            'properties' => [
+                                                                                    'HostName' => [
                                                                                             'type' => 'string'
                                                                                     ],
-                                                                                    'HttpRedirectCode' => [ 
+                                                                                    'HttpRedirectCode' => [
                                                                                             'type' => 'integer'
                                                                                     ],
-                                                                                    'Protocol' => [ 
+                                                                                    'Protocol' => [
                                                                                             'type' => 'string'
                                                                                     ],
-                                                                                    'ReplaceKeyPrefixWith' => [ 
+                                                                                    'ReplaceKeyPrefixWith' => [
                                                                                             'type' => 'string'
                                                                                     ],
-                                                                                    'ReplaceKeyWith' => [ 
+                                                                                    'ReplaceKeyWith' => [
                                                                                             'type' => 'string'
                                                                                     ]
                                                                             ]
@@ -1604,20 +1605,20 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'deleteBucketWebsiteConfiguration' => [ 
+                    'deleteBucketWebsiteConfiguration' => [
                             'httpMethod' => 'DELETE',
                             'specialParam' => 'website',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -1625,29 +1626,29 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'setBucketVersioningConfiguration' => [ 
+                    'setBucketVersioningConfiguration' => [
                             'httpMethod' => 'PUT',
                             'specialParam' => 'versioning',
-                            'data' => [ 
-                                    'xmlRoot' => [ 
+                            'data' => [
+                                    'xmlRoot' => [
                                             'name' => 'VersioningConfiguration'
                                     ]
                             ],
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Status' => [ 
+                                    'Status' => [
                                             'type' => 'string',
                                             'location' => 'xml'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -1655,24 +1656,24 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'getBucketVersioningConfiguration' => [ 
+                    'getBucketVersioningConfiguration' => [
                             'httpMethod' => 'GET',
                             'specialParam' => 'versioning',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ],
-                                            'Status' => [ 
+                                            'Status' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ]
@@ -1680,77 +1681,77 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'setBucketCors' => [ 
+                    'setBucketCors' => [
                             'httpMethod' => 'PUT',
                             'specialParam' => 'cors',
-                            'data' => [ 
-                                    'xmlRoot' => [ 
+                            'data' => [
+                                    'xmlRoot' => [
                                             'name' => 'CORSConfiguration'
                                     ],
                                     'contentMd5' => true
                             ],
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'CorsRules' => [ 
+                                    'CorsRules' => [
                                             'required' => true,
                                             'type' => 'array',
                                             'location' => 'xml',
                                             'sentAs' => 'CORSRule',
-                                            'data' => [ 
+                                            'data' => [
                                                     'xmlFlattened' => true
                                             ],
-                                            'items' => [ 
+                                            'items' => [
                                                     'type' => 'object',
                                                     'sentAs' => 'CORSRule',
-                                                    'properties' => [ 
-                                                            'ID' => [ 
+                                                    'properties' => [
+                                                            'ID' => [
                                                                     'type' => 'string'
                                                             ],
-                                                            'AllowedMethod' => [ 
+                                                            'AllowedMethod' => [
                                                                     'required' => true,
                                                                     'type' => 'array',
-                                                                    'data' => [ 
+                                                                    'data' => [
                                                                             'xmlFlattened' => true
                                                                     ],
-                                                                    'items' => [ 
+                                                                    'items' => [
                                                                             'type' => 'string',
                                                                             'sentAs' => 'AllowedMethod'
                                                                     ]
                                                             ],
-                                                            'AllowedOrigin' => [ 
+                                                            'AllowedOrigin' => [
                                                                     'required' => true,
                                                                     'type' => 'array',
-                                                                    'data' => [ 
+                                                                    'data' => [
                                                                             'xmlFlattened' => true
                                                                     ],
-                                                                    'items' => [ 
+                                                                    'items' => [
                                                                             'sentAs' => 'AllowedOrigin',
                                                                             'type' => 'string'
                                                                     ]
                                                             ],
-                                                            'AllowedHeader' => [ 
+                                                            'AllowedHeader' => [
                                                                     'type' => 'array',
-                                                                    'data' => [ 
+                                                                    'data' => [
                                                                             'xmlFlattened' => true
                                                                     ],
-                                                                    'items' => [ 
+                                                                    'items' => [
                                                                             'name' => 'AllowedHeader',
                                                                             'type' => 'string'
                                                                     ]
                                                             ],
-                                                            'MaxAgeSeconds' => [ 
+                                                            'MaxAgeSeconds' => [
                                                                     'type' => 'numeric'
                                                             ],
-                                                            'ExposeHeader' => [ 
+                                                            'ExposeHeader' => [
                                                                     'type' => 'array',
-                                                                    'data' => [ 
+                                                                    'data' => [
                                                                             'xmlFlattened' => true
                                                                     ],
-                                                                    'items' => [ 
+                                                                    'items' => [
                                                                             'name' => 'ExposeHeader',
                                                                             'type' => 'string'
                                                                     ]
@@ -1759,10 +1760,10 @@ class OBSRequestResource {
                                             ]
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -1770,75 +1771,75 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'getBucketCors' => [ 
+                    'getBucketCors' => [
                             'httpMethod' => 'GET',
                             'specialParam' => 'cors',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ],
-                                            'CorsRules' => [ 
+                                            'CorsRules' => [
                                                     'type' => 'array',
                                                     'location' => 'xml',
                                                     'sentAs' => 'CORSRule',
-                                                    'data' => [ 
+                                                    'data' => [
                                                             'xmlFlattened' => true
                                                     ],
-                                                    'items' => [ 
+                                                    'items' => [
                                                             'type' => 'object',
-                                                            'properties' => [ 
-                                                                    'ID' => [ 
+                                                            'properties' => [
+                                                                    'ID' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'AllowedMethod' => [ 
+                                                                    'AllowedMethod' => [
                                                                             'type' => 'array',
-                                                                            'data' => [ 
+                                                                            'data' => [
                                                                                     'xmlFlattened' => true
                                                                             ],
-                                                                            'items' => [ 
+                                                                            'items' => [
                                                                                     'type' => 'string',
                                                                                     'sentAs' => 'AllowedMethod'
                                                                             ]
                                                                     ],
-                                                                    'AllowedOrigin' => [ 
+                                                                    'AllowedOrigin' => [
                                                                             'type' => 'array',
-                                                                            'data' => [ 
+                                                                            'data' => [
                                                                                     'xmlFlattened' => true
                                                                             ],
-                                                                            'items' => [ 
+                                                                            'items' => [
                                                                                     'sentAs' => 'AllowedOrigin',
                                                                                     'type' => 'string'
                                                                             ]
                                                                     ],
-                                                                    'AllowedHeader' => [ 
+                                                                    'AllowedHeader' => [
                                                                             'type' => 'array',
-                                                                            'data' => [ 
+                                                                            'data' => [
                                                                                     'xmlFlattened' => true
                                                                             ],
-                                                                            'items' => [ 
+                                                                            'items' => [
                                                                                     'name' => 'AllowedHeader',
                                                                                     'type' => 'string'
                                                                             ]
                                                                     ],
-                                                                    'MaxAgeSeconds' => [ 
+                                                                    'MaxAgeSeconds' => [
                                                                             'type' => 'integer'
                                                                     ],
-                                                                    'ExposeHeader' => [ 
+                                                                    'ExposeHeader' => [
                                                                             'type' => 'array',
-                                                                            'data' => [ 
+                                                                            'data' => [
                                                                                     'xmlFlattened' => true
                                                                             ],
-                                                                            'items' => [ 
+                                                                            'items' => [
                                                                                     'name' => 'ExposeHeader',
                                                                                     'type' => 'string'
                                                                             ]
@@ -1850,20 +1851,20 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'deleteBucketCors' => [ 
+                    'deleteBucketCors' => [
                             'httpMethod' => 'DELETE',
                             'specialParam' => 'cors',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -1871,61 +1872,61 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'optionsBucket' => [ 
+                    'optionsBucket' => [
                             'httpMethod' => 'OPTIONS',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Origin' => [ 
+                                    'Origin' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'header'
                                     ],
-                                    'AccessControlRequestMethods' => [ 
+                                    'AccessControlRequestMethods' => [
                                             'required' => true,
                                             'type' => 'array',
                                             'location' => 'header',
-                                            'items' => [ 
+                                            'items' => [
                                                     'sentAs' => 'Access-Control-Request-Method',
                                                     'type' => 'string'
                                             ]
                                     ],
-                                    'AccessControlRequestHeaders' => [ 
+                                    'AccessControlRequestHeaders' => [
                                             'type' => 'array',
                                             'location' => 'header',
-                                            'items' => [ 
+                                            'items' => [
                                                     'sentAs' => 'Access-Control-Request-Headers',
                                                     'type' => 'string'
                                             ]
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ],
-                                            'AllowOrigin' => [ 
+                                            'AllowOrigin' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'access-control-allow-origin'
                                             ],
-                                            'AllowHeader' => [ 
+                                            'AllowHeader' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'access-control-allow-headers'
                                             ],
-                                            'AllowMethod' => [ 
+                                            'AllowMethod' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'access-control-allow-methods'
                                             ],
-                                            'ExposeHeader' => [ 
+                                            'ExposeHeader' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'access-control-expose-headers'
                                             ],
-                                            'MaxAgeSeconds' => [ 
+                                            'MaxAgeSeconds' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'access-control-max-age'
                                             ]
@@ -1933,36 +1934,36 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'setBucketTagging' => [ 
+                    'setBucketTagging' => [
                             'httpMethod' => 'PUT',
                             'specialParam' => 'tagging',
-                            'data' => [ 
-                                    'xmlRoot' => [ 
+                            'data' => [
+                                    'xmlRoot' => [
                                             'name' => 'Tagging'
                                     ],
                                     'contentMd5' => true
                             ],
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Tags' => [ 
+                                    'Tags' => [
                                             'required' => true,
                                             'type' => 'array',
                                             'location' => 'xml',
                                             'sentAs' => 'TagSet',
-                                            'items' => [ 
+                                            'items' => [
                                                     'required' => true,
                                                     'type' => 'object',
                                                     'name' => 'Tag',
-                                                    'properties' => [ 
-                                                            'Key' => [ 
+                                                    'properties' => [
+                                                            'Key' => [
                                                                     'required' => true,
                                                                     'type' => 'string'
                                                             ],
-                                                            'Value' => [ 
+                                                            'Value' => [
                                                                     'required' => true,
                                                                     'type' => 'string'
                                                             ]
@@ -1970,10 +1971,10 @@ class OBSRequestResource {
                                             ]
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -1981,35 +1982,35 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'getBucketTagging' => [ 
+                    'getBucketTagging' => [
                             'httpMethod' => 'GET',
                             'specialParam' => 'tagging',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ],
-                                            'Tags' => [ 
+                                            'Tags' => [
                                                     'type' => 'array',
                                                     'location' => 'xml',
                                                     'sentAs' => 'TagSet',
-                                                    'items' => [ 
+                                                    'items' => [
                                                             'type' => 'object',
                                                             'name' => 'Tag',
-                                                            'properties' => [ 
-                                                                    'Key' => [ 
+                                                            'properties' => [
+                                                                    'Key' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Value' => [ 
+                                                                    'Value' => [
                                                                             'type' => 'string'
                                                                     ]
                                                             ]
@@ -2019,20 +2020,20 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'deleteBucketTagging' => [ 
+                    'deleteBucketTagging' => [
                             'httpMethod' => 'DELETE',
                             'specialParam' => 'tagging',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -2040,34 +2041,34 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'setBucketNotification' => [ 
+                    'setBucketNotification' => [
                             'httpMethod' => 'PUT',
                             'specialParam' => 'notification',
-                            'data' => [ 
-                                    'xmlRoot' => [ 
+                            'data' => [
+                                    'xmlRoot' => [
                                             'name' => 'NotificationConfiguration'
                                     ],
                                     'xmlAllowEmpty' => true
                             ],
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'TopicConfigurations' => [ 
+                                    'TopicConfigurations' => [
                                             'type' => 'array',
                                             'location' => 'xml',
                                             'sentAs' => 'TopicConfiguration',
-                                            'data' => [ 
+                                            'data' => [
                                                     'xmlFlattened' => true
                                             ],
-                                            'items' => [ 
+                                            'items' => [
                                                     'type' => 'object',
                                                     'location' => 'xml',
                                                     'sentAs' => 'TopicConfiguration',
-                                                    'properties' => [ 
-                                                            'ID' => [ 
+                                                    'properties' => [
+                                                            'ID' => [
                                                                     'type' => 'string',
                                                                     'sentAs' => 'Id'
                                                             ],
@@ -2089,15 +2090,15 @@ class OBSRequestResource {
                                                                     ]
                                                                 ]
                                                             ],
-                                                            'Topic' => [ 
+                                                            'Topic' => [
                                                                     'type' => 'string'
                                                             ],
-                                                            'Event' => [ 
+                                                            'Event' => [
                                                                     'type' => 'array',
-                                                                    'data' => [ 
+                                                                    'data' => [
                                                                             'xmlFlattened' => true
                                                                     ],
-                                                                    'items' => [ 
+                                                                    'items' => [
                                                                             'type' => 'string',
                                                                             'sentAs' => 'Event',
                                                                             'transform' => 'event'
@@ -2106,48 +2107,48 @@ class OBSRequestResource {
                                                     ]
                                             ]
                                     ],
-                                    'FunctionStageConfigurations' => [ 
+                                    'FunctionStageConfigurations' => [
                                             'type' => 'array',
                                             'location' => 'xml',
                                             'sentAs' => 'FunctionStageConfiguration',
-                                            'data' => [ 
+                                            'data' => [
                                                     'xmlFlattened' => true
                                             ],
-                                            'items' => [ 
+                                            'items' => [
                                                     'type' => 'object',
                                                     'location' => 'xml',
                                                     'sentAs' => 'FunctionStageConfiguration',
-                                                    'properties' => [ 
-                                                            'ID' => [ 
+                                                    'properties' => [
+                                                            'ID' => [
                                                                     'type' => 'string',
                                                                     'sentAs' => 'Id'
                                                             ],
-                                                            'FunctionStage' => [ 
+                                                            'FunctionStage' => [
                                                                     'type' => 'string'
                                                             ],
-                                                            'Event' => [ 
+                                                            'Event' => [
                                                                     'type' => 'array',
-                                                                    'data' => [ 
+                                                                    'data' => [
                                                                             'xmlFlattened' => true
                                                                     ],
-                                                                    'items' => [ 
+                                                                    'items' => [
                                                                             'type' => 'string',
                                                                             'sentAs' => 'Event'
                                                                     ]
                                                             ],
-                                                            'Filter' => [ 
+                                                            'Filter' => [
                                                                     'type' => 'array',
                                                                     'wrapper' => 'Filter',
                                                                     'sentAs' => 'Object',
-                                                                    'items' => [ 
+                                                                    'items' => [
                                                                             'type' => 'object',
                                                                             'sentAs' => 'FilterRule',
-                                                                            'properties' => [ 
-                                                                                    'Name' => [ 
+                                                                            'properties' => [
+                                                                                    'Name' => [
                                                                                             'type' => 'string'
                                                                                     ],
 
-                                                                                    'Value' => [ 
+                                                                                    'Value' => [
                                                                                             'type' => 'string'
                                                                                     ]
                                                                             ]
@@ -2156,48 +2157,48 @@ class OBSRequestResource {
                                                     ]
                                             ]
                                     ],
-                                    'FunctionGraphConfigurations' => [ 
+                                    'FunctionGraphConfigurations' => [
                                             'type' => 'array',
                                             'location' => 'xml',
                                             'sentAs' => 'FunctionGraphConfiguration',
-                                            'data' => [ 
+                                            'data' => [
                                                     'xmlFlattened' => true
                                             ],
-                                            'items' => [ 
+                                            'items' => [
                                                     'type' => 'object',
                                                     'location' => 'xml',
                                                     'sentAs' => 'FunctionGraphConfiguration',
-                                                    'properties' => [ 
-                                                            'ID' => [ 
+                                                    'properties' => [
+                                                            'ID' => [
                                                                     'type' => 'string',
                                                                     'sentAs' => 'Id'
                                                             ],
-                                                            'FunctionGraph' => [ 
+                                                            'FunctionGraph' => [
                                                                     'type' => 'string'
                                                             ],
-                                                            'Event' => [ 
+                                                            'Event' => [
                                                                     'type' => 'array',
-                                                                    'data' => [ 
+                                                                    'data' => [
                                                                             'xmlFlattened' => true
                                                                     ],
-                                                                    'items' => [ 
+                                                                    'items' => [
                                                                             'type' => 'string',
                                                                             'sentAs' => 'Event'
                                                                     ]
                                                             ],
-                                                            'Filter' => [ 
+                                                            'Filter' => [
                                                                     'type' => 'array',
                                                                     'wrapper' => 'Filter',
                                                                     'sentAs' => 'Object',
-                                                                    'items' => [ 
+                                                                    'items' => [
                                                                             'type' => 'object',
                                                                             'sentAs' => 'FilterRule',
-                                                                            'properties' => [ 
-                                                                                    'Name' => [ 
+                                                                            'properties' => [
+                                                                                    'Name' => [
                                                                                             'type' => 'string'
                                                                                     ],
 
-                                                                                    'Value' => [ 
+                                                                                    'Value' => [
                                                                                             'type' => 'string'
                                                                                     ]
                                                                             ]
@@ -2207,10 +2208,10 @@ class OBSRequestResource {
                                             ]
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -2218,65 +2219,65 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'getBucketNotification' => [ 
+                    'getBucketNotification' => [
                             'httpMethod' => 'GET',
                             'specialParam' => 'notification',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ],
-                                            'TopicConfigurations' => [ 
+                                            'TopicConfigurations' => [
                                                     'type' => 'array',
                                                     'location' => 'xml',
                                                     'sentAs' => 'TopicConfiguration',
-                                                    'data' => [ 
+                                                    'data' => [
                                                             'xmlFlattened' => true
                                                     ],
-                                                    'items' => [ 
+                                                    'items' => [
                                                             'type' => 'object',
                                                             'location' => 'xml',
                                                             'sentAs' => 'TopicConfiguration',
-                                                            'properties' => [ 
-                                                                    'ID' => [ 
+                                                            'properties' => [
+                                                                    'ID' => [
                                                                             'type' => 'string',
                                                                             'sentAs' => 'Id'
                                                                     ],
-                                                                    'Topic' => [ 
+                                                                    'Topic' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Event' => [ 
+                                                                    'Event' => [
                                                                             'type' => 'array',
-                                                                            'data' => [ 
+                                                                            'data' => [
                                                                                     'xmlFlattened' => true
                                                                             ],
-                                                                            'items' => [ 
+                                                                            'items' => [
                                                                                     'type' => 'string',
                                                                                     'sentAs' => 'Event'
                                                                             ]
                                                                     ],
-                                                                    'Filter' => [ 
+                                                                    'Filter' => [
                                                                             'type' => 'array',
                                                                             'wrapper' => 'Filter',
                                                                             'sentAs' => 'Object',
-                                                                            'items' => [ 
+                                                                            'items' => [
                                                                                     'type' => 'object',
                                                                                     'sentAs' => 'FilterRule',
-                                                                                    'properties' => [ 
-                                                                                            'Name' => [ 
+                                                                                    'properties' => [
+                                                                                            'Name' => [
                                                                                                     'type' => 'string'
                                                                                             ],
 
-                                                                                            'Value' => [ 
+                                                                                            'Value' => [
                                                                                                     'type' => 'string'
                                                                                             ]
                                                                                     ]
@@ -2285,48 +2286,48 @@ class OBSRequestResource {
                                                             ]
                                                     ]
                                             ],
-                                            'FunctionStageConfigurations' => [ 
+                                            'FunctionStageConfigurations' => [
                                                     'type' => 'array',
                                                     'location' => 'xml',
                                                     'sentAs' => 'FunctionStageConfiguration',
-                                                    'data' => [ 
+                                                    'data' => [
                                                             'xmlFlattened' => true
                                                     ],
-                                                    'items' => [ 
+                                                    'items' => [
                                                             'type' => 'object',
                                                             'location' => 'xml',
                                                             'sentAs' => 'FunctionStageConfiguration',
-                                                            'properties' => [ 
-                                                                    'ID' => [ 
+                                                            'properties' => [
+                                                                    'ID' => [
                                                                             'type' => 'string',
                                                                             'sentAs' => 'Id'
                                                                     ],
-                                                                    'FunctionStage' => [ 
+                                                                    'FunctionStage' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Event' => [ 
+                                                                    'Event' => [
                                                                             'type' => 'array',
-                                                                            'data' => [ 
+                                                                            'data' => [
                                                                                     'xmlFlattened' => true
                                                                             ],
-                                                                            'items' => [ 
+                                                                            'items' => [
                                                                                     'type' => 'string',
                                                                                     'sentAs' => 'Event'
                                                                             ]
                                                                     ],
-                                                                    'Filter' => [ 
+                                                                    'Filter' => [
                                                                             'type' => 'array',
                                                                             'wrapper' => 'Filter',
                                                                             'sentAs' => 'Object',
-                                                                            'items' => [ 
+                                                                            'items' => [
                                                                                     'type' => 'object',
                                                                                     'sentAs' => 'FilterRule',
-                                                                                    'properties' => [ 
-                                                                                            'Name' => [ 
+                                                                                    'properties' => [
+                                                                                            'Name' => [
                                                                                                     'type' => 'string'
                                                                                             ],
 
-                                                                                            'Value' => [ 
+                                                                                            'Value' => [
                                                                                                     'type' => 'string'
                                                                                             ]
                                                                                     ]
@@ -2335,48 +2336,48 @@ class OBSRequestResource {
                                                             ]
                                                     ]
                                             ],
-                                            'FunctionGraphConfigurations' => [ 
+                                            'FunctionGraphConfigurations' => [
                                                     'type' => 'array',
                                                     'location' => 'xml',
                                                     'sentAs' => 'FunctionGraphConfiguration',
-                                                    'data' => [ 
+                                                    'data' => [
                                                             'xmlFlattened' => true
                                                     ],
-                                                    'items' => [ 
+                                                    'items' => [
                                                             'type' => 'object',
                                                             'location' => 'xml',
                                                             'sentAs' => 'FunctionGraphConfiguration',
-                                                            'properties' => [ 
-                                                                    'ID' => [ 
+                                                            'properties' => [
+                                                                    'ID' => [
                                                                             'type' => 'string',
                                                                             'sentAs' => 'Id'
                                                                     ],
-                                                                    'FunctionGraph' => [ 
+                                                                    'FunctionGraph' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Event' => [ 
+                                                                    'Event' => [
                                                                             'type' => 'array',
-                                                                            'data' => [ 
+                                                                            'data' => [
                                                                                     'xmlFlattened' => true
                                                                             ],
-                                                                            'items' => [ 
+                                                                            'items' => [
                                                                                     'type' => 'string',
                                                                                     'sentAs' => 'Event'
                                                                             ]
                                                                     ],
-                                                                    'Filter' => [ 
+                                                                    'Filter' => [
                                                                             'type' => 'array',
                                                                             'wrapper' => 'Filter',
                                                                             'sentAs' => 'Object',
-                                                                            'items' => [ 
+                                                                            'items' => [
                                                                                     'type' => 'object',
                                                                                     'sentAs' => 'FilterRule',
-                                                                                    'properties' => [ 
-                                                                                            'Name' => [ 
+                                                                                    'properties' => [
+                                                                                            'Name' => [
                                                                                                     'type' => 'string'
                                                                                             ],
 
-                                                                                            'Value' => [ 
+                                                                                            'Value' => [
                                                                                                     'type' => 'string'
                                                                                             ]
                                                                                     ]
@@ -2389,66 +2390,66 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'optionsObject' => [ 
+                    'optionsObject' => [
                             'httpMethod' => 'OPTIONS',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Key' => [ 
+                                    'Key' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'uri'
                                     ],
-                                    'Origin' => [ 
+                                    'Origin' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'header'
                                     ],
-                                    'AccessControlRequestMethods' => [ 
+                                    'AccessControlRequestMethods' => [
                                             'required' => true,
                                             'type' => 'array',
                                             'location' => 'header',
-                                            'items' => [ 
+                                            'items' => [
                                                     'sentAs' => 'Access-Control-Request-Method',
                                                     'type' => 'string'
                                             ]
                                     ],
-                                    'AccessControlRequestHeaders' => [ 
+                                    'AccessControlRequestHeaders' => [
                                             'type' => 'array',
                                             'location' => 'header',
-                                            'items' => [ 
+                                            'items' => [
                                                     'sentAs' => 'Access-Control-Request-Headers',
                                                     'type' => 'string'
                                             ]
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ],
-                                            'AllowOrigin' => [ 
+                                            'AllowOrigin' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'access-control-allow-origin'
                                             ],
-                                            'AllowHeader' => [ 
+                                            'AllowHeader' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'access-control-allow-headers'
                                             ],
-                                            'AllowMethod' => [ 
+                                            'AllowMethod' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'access-control-allow-methods'
                                             ],
-                                            'ExposeHeader' => [ 
+                                            'ExposeHeader' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'access-control-expose-headers'
                                             ],
-                                            'MaxAgeSeconds' => [ 
+                                            'MaxAgeSeconds' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'access-control-max-age'
                                             ]
@@ -2456,143 +2457,143 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'deleteObject' => [ 
+                    'deleteObject' => [
                             'httpMethod' => 'DELETE',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Key' => [ 
+                                    'Key' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'uri'
                                     ],
-                                    'VersionId' => [ 
+                                    'VersionId' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'versionId'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'DeleteMarker' => [ 
+                                    'properties' => [
+                                            'DeleteMarker' => [
                                                     'type' => 'boolean',
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-delete-marker'
                                             ],
-                                            'VersionId' => [ 
+                                            'VersionId' => [
                                                     'type' => 'string',
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-version-id'
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
                                     ]
                             ]
                     ],
-                    'deleteObjects' => [ 
+                    'deleteObjects' => [
                             'httpMethod' => 'POST',
                             'specialParam' => 'delete',
-                            'data' => [ 
-                                    'xmlRoot' => [ 
+                            'data' => [
+                                    'xmlRoot' => [
                                             'name' => 'Delete'
                                     ],
                                     'contentMd5' => true
                             ],
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Quiet' => [ 
+                                    'Quiet' => [
                                             'type' => 'boolean',
                                             'location' => 'xml'
                                     ],
-                                    'Objects' => [ 
+                                    'Objects' => [
                                             'required' => true,
                                             'type' => 'array',
                                             'location' => 'xml',
-                                            'data' => [ 
+                                            'data' => [
                                                     'xmlFlattened' => true
                                             ],
-                                            'items' => [ 
+                                            'items' => [
                                                     'type' => 'object',
                                                     'sentAs' => 'Object',
-                                                    'properties' => [ 
-                                                            'Key' => [ 
+                                                    'properties' => [
+                                                            'Key' => [
                                                                     'required' => true,
                                                                     'type' => 'string'
                                                             ],
-                                                            'VersionId' => [ 
+                                                            'VersionId' => [
                                                                     'type' => 'string'
                                                             ]
                                                     ]
                                             ]
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'Deleteds' => [ 
+                                    'properties' => [
+                                            'Deleteds' => [
                                                     'type' => 'array',
                                                     'location' => 'xml',
                                                     'sentAs' => 'Deleted',
-                                                    'data' => [ 
+                                                    'data' => [
                                                             'xmlFlattened' => true
                                                     ],
-                                                    'items' => [ 
+                                                    'items' => [
                                                             'name' => 'DeletedObject',
                                                             'type' => 'object',
-                                                            'properties' => [ 
-                                                                    'Key' => [ 
+                                                            'properties' => [
+                                                                    'Key' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'VersionId' => [ 
+                                                                    'VersionId' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'DeleteMarker' => [ 
+                                                                    'DeleteMarker' => [
                                                                             'type' => 'boolean'
                                                                     ],
-                                                                    'DeleteMarkerVersionId' => [ 
+                                                                    'DeleteMarkerVersionId' => [
                                                                             'type' => 'string'
                                                                     ]
                                                             ]
                                                     ]
                                             ],
-                                            'Errors' => [ 
+                                            'Errors' => [
                                                     'type' => 'array',
                                                     'location' => 'xml',
                                                     'sentAs' => 'Error',
-                                                    'data' => [ 
+                                                    'data' => [
                                                             'xmlFlattened' => true
                                                     ],
-                                                    'items' => [ 
+                                                    'items' => [
                                                             'name' => 'Error',
                                                             'type' => 'object',
                                                             'sentAs' => 'Error',
-                                                            'properties' => [ 
-                                                                    'Key' => [ 
+                                                            'properties' => [
+                                                                    'Key' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'VersionId' => [ 
+                                                                    'VersionId' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Code' => [ 
+                                                                    'Code' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Message' => [ 
+                                                                    'Message' => [
                                                                             'type' => 'string'
                                                                     ]
                                                             ]
                                                     ]
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -2600,177 +2601,177 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'setObjectAcl' => [ 
+                    'setObjectAcl' => [
                             'httpMethod' => 'PUT',
                             'specialParam' => 'acl',
-                            'data' => [ 
-                                    'xmlRoot' => [ 
+                            'data' => [
+                                    'xmlRoot' => [
                                             'name' => 'AccessControlPolicy'
                                     ]
                             ],
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Key' => [ 
+                                    'Key' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'uri'
                                     ],
-                                    'VersionId' => [ 
+                                    'VersionId' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'versionId'
                                     ],
-                                    'ACL' => [ 
+                                    'ACL' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-acl',
                                             'transform' => 'aclHeader'
                                     ],
-                                    'GrantRead' => [ 
+                                    'GrantRead' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-grant-read'
                                     ],
-                                    'GrantWrite' => [ 
+                                    'GrantWrite' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-grant-write'
                                     ],
-                                    'GrantReadAcp' => [ 
+                                    'GrantReadAcp' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-grant-read-acp'
                                     ],
-                                    'GrantWriteAcp' => [ 
+                                    'GrantWriteAcp' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-grant-write-acp'
                                     ],
-                                    'GrantFullControl' => [ 
+                                    'GrantFullControl' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-grant-full-control'
                                     ],
-                                    'Owner' => [ 
+                                    'Owner' => [
                                             'type' => 'object',
                                             'location' => 'xml',
-                                            'properties' => [ 
-                                                    'ID' => [ 
+                                            'properties' => [
+                                                    'ID' => [
                                                             'type' => 'string'
                                                     ]
                                             ]
                                     ],
-                                    'Delivered' => [ 
+                                    'Delivered' => [
                                             'type' => 'boolean'
                                     ],
-                                    'Grants' => [ 
+                                    'Grants' => [
                                             'type' => 'array',
                                             'location' => 'xml',
                                             'sentAs' => 'AccessControlList',
-                                            'items' => [ 
+                                            'items' => [
                                                     'name' => 'Grant',
                                                     'type' => 'object',
-                                                    'properties' => [ 
-                                                            'Grantee' => [ 
+                                                    'properties' => [
+                                                            'Grantee' => [
                                                                     'type' => 'object',
-                                                                    'properties' => [ 
-                                                                            'ID' => [ 
+                                                                    'properties' => [
+                                                                            'ID' => [
                                                                                     'type' => 'string'
                                                                             ],
-                                                                            'URI' => [ 
+                                                                            'URI' => [
                                                                                     'type' => 'string',
                                                                                     'sentAs' => 'Canned',
                                                                                     'transform' => 'aclUri'
                                                                             ]
                                                                     ]
                                                             ],
-                                                            'Permission' => [ 
+                                                            'Permission' => [
                                                                     'type' => 'string'
                                                             ]
                                                     ]
                                             ]
                                     ]
                             ],
-                            'responseParameters' => [ 
-                                    'RequestId' => [ 
+                            'responseParameters' => [
+                                    'RequestId' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-request-id'
                                     ]
                             ]
                     ],
 
-                    'getObjectAcl' => [ 
+                    'getObjectAcl' => [
                             'httpMethod' => 'GET',
                             'specialParam' => 'acl',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Key' => [ 
+                                    'Key' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'uri'
                                     ],
-                                    'VersionId' => [ 
+                                    'VersionId' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'versionId'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'Owner' => [ 
+                                    'properties' => [
+                                            'Owner' => [
                                                     'type' => 'object',
                                                     'location' => 'xml',
-                                                    'properties' => [ 
-                                                            'ID' => [ 
+                                                    'properties' => [
+                                                            'ID' => [
                                                                     'type' => 'string'
                                                             ]
                                                     ]
                                             ],
-                                            'Delivered' => [ 
+                                            'Delivered' => [
                                                     'type' => 'boolean',
                                                     'location' => 'xml'
                                             ],
-                                            'Grants' => [ 
+                                            'Grants' => [
                                                     'type' => 'array',
                                                     'location' => 'xml',
                                                     'sentAs' => 'AccessControlList',
-                                                    'items' => [ 
+                                                    'items' => [
                                                             'name' => 'Grant',
                                                             'type' => 'object',
                                                             'sentAs' => 'Grant',
-                                                            'properties' => [ 
-                                                                    'Grantee' => [ 
+                                                            'properties' => [
+                                                                    'Grantee' => [
                                                                             'type' => 'object',
-                                                                            'properties' => [ 
-                                                                                    'ID' => [ 
+                                                                            'properties' => [
+                                                                                    'ID' => [
                                                                                             'type' => 'string'
                                                                                     ],
-                                                                                    'URI' => [ 
+                                                                                    'URI' => [
                                                                                             'type' => 'string',
                                                                                             'sentAs' => 'Canned'
                                                                                     ]
                                                                             ]
                                                                     ],
-                                                                    'Permission' => [ 
+                                                                    'Permission' => [
                                                                             'type' => 'string'
                                                                     ]
                                                             ]
                                                     ]
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ],
-                                            'VersionId' => [ 
+                                            'VersionId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-version-id'
                                             ]
@@ -2778,170 +2779,170 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'restoreObject' => [ 
+                    'restoreObject' => [
                             'httpMethod' => 'POST',
                             'specialParam' => 'restore',
-                            'data' => [ 
-                                    'xmlRoot' => [ 
+                            'data' => [
+                                    'xmlRoot' => [
                                             'name' => 'RestoreRequest'
                                     ]
                             ],
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Key' => [ 
+                                    'Key' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'uri'
                                     ],
-                                    'VersionId' => [ 
+                                    'VersionId' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'versionId'
                                     ],
-                                    'Days' => [ 
+                                    'Days' => [
                                             'required' => true,
                                             'type' => 'numeric',
                                             'location' => 'xml',
                                             'sentAs' => 'Days'
                                     ],
-                                    'Tier' => [ 
+                                    'Tier' => [
                                             'wrapper' => 'RestoreJob',
                                             'type' => 'string',
                                             'sentAs' => 'Tier',
                                             'location' => 'xml'
                                     ]
                             ],
-                            'responseParameters' => [ 
-                                    'RequestId' => [ 
+                            'responseParameters' => [
+                                    'RequestId' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-request-id'
                                     ]
                             ]
                     ],
 
-                    'putObject' => [ 
+                    'putObject' => [
                             'httpMethod' => 'PUT',
-                            'requestParameters' => [ 
-                                    'ACL' => [ 
+                            'requestParameters' => [
+                                    'ACL' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-acl',
                                             'transform' => 'aclHeader'
                                     ],
-                                    'StorageClass' => [ 
+                                    'StorageClass' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-storage-class',
                                             'transform' => 'storageClass'
                                     ],
-                                    'Body' => [ 
+                                    'Body' => [
                                             'type' => 'stream',
                                             'location' => 'body'
                                     ],
-                                    'Bucket' => [ 
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Key' => [ 
+                                    'Key' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'uri'
                                     ],
-                                    'ContentMD5' => [ 
+                                    'ContentMD5' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'Content-MD5'
                                     ],
-                                    'ContentType' => [ 
+                                    'ContentType' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'Content-Type'
                                     ],
-                                    'ContentLength' => [ 
+                                    'ContentLength' => [
                                             'type' => 'numeric',
                                             'location' => 'header',
                                             'sentAs' => 'Content-Length'
                                     ],
-                                    'Metadata' => [ 
+                                    'Metadata' => [
                                             'type' => 'object',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-meta-'
                                     ],
-                                    'SourceFile' => [ 
+                                    'SourceFile' => [
                                             'type' => 'file',
                                             'location' => 'body'
                                     ],
-                                    'WebsiteRedirectLocation' => [ 
+                                    'WebsiteRedirectLocation' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-website-redirect-location'
                                     ],
-                                    'SseKms' => [ 
+                                    'SseKms' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-server-side-encryption'
                                     ],
-                                    'SseKmsKey' => [ 
+                                    'SseKmsKey' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                     ],
-                                    'SseC' => [ 
+                                    'SseC' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                     ],
-                                    'SseCKey' => [ 
+                                    'SseCKey' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ],
-                                    'SuccessRedirect' => [ 
+                                    'SuccessRedirect' => [
                                             'location' => 'header',
                                             'type' => 'string',
                                             'sentAs' => 'success-action-redirect'
                                     ],
-                                    'Expires' => [ 
+                                    'Expires' => [
                                             'location' => 'header',
                                             'type' => 'string',
                                             'sentAs' => 'x-obs-expires'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'ETag' => [ 
+                                    'properties' => [
+                                            'ETag' => [
                                                     'type' => 'string',
                                                     'location' => 'header'
                                             ],
-                                            'VersionId' => [ 
+                                            'VersionId' => [
                                                     'type' => 'string',
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-version-id'
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ],
-                                            'StorageClass' => [ 
+                                            'StorageClass' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-storage-class'
                                             ],
-                                            'SseKms' => [ 
+                                            'SseKms' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption'
                                             ],
-                                            'SseKmsKey' => [ 
+                                            'SseKmsKey' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                             ],
-                                            'SseC' => [ 
+                                            'SseC' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                             ],
-                                            'SseCKeyMd5' => [ 
+                                            'SseCKeyMd5' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
                                             ]
@@ -2949,246 +2950,246 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'getObject' => [ 
+                    'getObject' => [
                             'httpMethod' => 'GET',
                             'stream' => true,
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'IfMatch' => [ 
+                                    'IfMatch' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'If-Match'
                                     ],
-                                    'IfModifiedSince' => [ 
+                                    'IfModifiedSince' => [
                                             'type' => 'string',
                                             'format' => 'date-time-http',
                                             'location' => 'header',
                                             'sentAs' => 'If-Modified-Since'
                                     ],
-                                    'IfNoneMatch' => [ 
+                                    'IfNoneMatch' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'If-None-Match'
                                     ],
-                                    'IfUnmodifiedSince' => [ 
+                                    'IfUnmodifiedSince' => [
                                             'type' => 'string',
                                             'format' => 'date-time-http',
                                             'location' => 'header',
                                             'sentAs' => 'If-Unmodified-Since'
                                     ],
-                                    'Key' => [ 
+                                    'Key' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'uri'
                                     ],
-                                    'Range' => [ 
+                                    'Range' => [
                                             'type' => 'string',
                                             'location' => 'header'
                                     ],
-                                    'ImageProcess' => [ 
+                                    'ImageProcess' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'x-image-process'
                                     ],
-                                    'ResponseCacheControl' => [ 
+                                    'ResponseCacheControl' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'response-cache-control'
                                     ],
-                                    'ResponseContentDisposition' => [ 
+                                    'ResponseContentDisposition' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'response-content-disposition'
                                     ],
-                                    'ResponseContentEncoding' => [ 
+                                    'ResponseContentEncoding' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'response-content-encoding'
                                     ],
-                                    'ResponseContentLanguage' => [ 
+                                    'ResponseContentLanguage' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'response-content-language'
                                     ],
-                                    'ResponseContentType' => [ 
+                                    'ResponseContentType' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'response-content-type'
                                     ],
-                                    'ResponseExpires' => [ 
+                                    'ResponseExpires' => [
                                             'type' => 'string',
                                             'format' => 'date-time-http',
                                             'location' => 'query',
                                             'sentAs' => 'response-expires'
                                     ],
-                                    'VersionId' => [ 
+                                    'VersionId' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'versionId'
                                     ],
-                                    'SaveAsFile' => [ 
+                                    'SaveAsFile' => [
                                             'type' => 'file',
                                             'location' => 'response'
                                     ],
-                                    'FilePath' => [ 
+                                    'FilePath' => [
                                             'type' => 'file',
                                             'location' => 'response'
                                     ],
 
-                                    'Origin' => [ 
+                                    'Origin' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'Origin'
                                     ],
-                                    'RequestHeader' => [ 
+                                    'RequestHeader' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'Access-Control-Request-Headers'
                                     ],
-                                    'SseC' => [ 
+                                    'SseC' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                     ],
-                                    'SseCKey' => [ 
+                                    'SseCKey' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'Body' => [ 
+                                    'properties' => [
+                                            'Body' => [
                                                     'type' => 'stream',
                                                     'location' => 'body'
                                             ],
-                                            'DeleteMarker' => [ 
+                                            'DeleteMarker' => [
                                                     'type' => 'boolean',
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-delete-marker'
                                             ],
-                                            'Expiration' => [ 
+                                            'Expiration' => [
                                                     'type' => 'string',
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-expiration'
                                             ],
-                                            'LastModified' => [ 
+                                            'LastModified' => [
                                                     'type' => 'string',
                                                     'location' => 'header',
                                                     'sentAs' => 'last-modified'
                                             ],
-                                            'ContentLength' => [ 
+                                            'ContentLength' => [
                                                     'type' => 'integer',
                                                     'location' => 'header',
                                                     'sentAs' => 'content-length'
                                             ],
-                                            'ETag' => [ 
+                                            'ETag' => [
                                                     'type' => 'string',
                                                     'location' => 'header',
                                                     'sentAs' => 'etag'
                                             ],
-                                            'VersionId' => [ 
+                                            'VersionId' => [
                                                     'type' => 'string',
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-version-id'
                                             ],
-                                            'CacheControl' => [ 
+                                            'CacheControl' => [
                                                     'type' => 'string',
                                                     'location' => 'header',
                                                     'sentAs' => 'cache-control'
                                             ],
-                                            'ContentDisposition' => [ 
+                                            'ContentDisposition' => [
                                                     'type' => 'string',
                                                     'location' => 'header',
                                                     'sentAs' => 'content-disposition'
                                             ],
-                                            'ContentEncoding' => [ 
+                                            'ContentEncoding' => [
                                                     'type' => 'string',
                                                     'location' => 'header',
                                                     'sentAs' => 'content-encoding'
                                             ],
-                                            'ContentLanguage' => [ 
+                                            'ContentLanguage' => [
                                                     'type' => 'string',
                                                     'location' => 'header',
                                                     'sentAs' => 'content-language'
                                             ],
-                                            'ContentType' => [ 
+                                            'ContentType' => [
                                                     'type' => 'string',
                                                     'location' => 'header',
                                                     'sentAs' => 'content-type'
                                             ],
-                                            'Expires' => [ 
+                                            'Expires' => [
                                                     'type' => 'string',
                                                     'location' => 'header'
                                             ],
-                                            'WebsiteRedirectLocation' => [ 
+                                            'WebsiteRedirectLocation' => [
                                                     'type' => 'string',
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-website-redirect-location'
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ],
-                                            'StorageClass' => [ 
+                                            'StorageClass' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-storage-class'
                                             ],
-                                            'Restore' => [ 
+                                            'Restore' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-restore'
                                             ],
-                                            'AllowOrigin' => [ 
+                                            'AllowOrigin' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'access-control-allow-origin'
                                             ],
-                                            'MaxAgeSeconds' => [ 
+                                            'MaxAgeSeconds' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'access-control-max-age'
                                             ],
-                                            'ExposeHeader' => [ 
+                                            'ExposeHeader' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'access-control-expose-headers'
                                             ],
-                                            'AllowMethod' => [ 
+                                            'AllowMethod' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'access-control-allow-methods'
                                             ],
-                                            'AllowHeader' => [ 
+                                            'AllowHeader' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'access-control-allow-headers'
                                             ],
-                                            'SseKms' => [ 
+                                            'SseKms' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption'
                                             ],
-                                            'SseKmsKey' => [ 
+                                            'SseKmsKey' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                             ],
-                                            'SseC' => [ 
+                                            'SseC' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                             ],
-                                            'SseCKeyMd5' => [ 
+                                            'SseCKeyMd5' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
                                             ],
-                                            'Metadata' => [ 
+                                            'Metadata' => [
                                                     'location' => 'header',
                                                     'type' => 'object',
                                                     'sentAs' => 'x-obs-meta-'
                                             ],
-                                            'ObjectType' => [ 
+                                            'ObjectType' => [
                                                     'location' => 'header',
                                                     'type' => 'string',
                                                     'sentAs' => 'x-obs-object-type'
                                             ],
-                                            'AppendPosition' => [ 
+                                            'AppendPosition' => [
                                                     'location' => 'header',
                                                     'type' => 'string',
                                                     'sentAs' => 'x-obs-next-append-position'
@@ -3197,169 +3198,169 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'copyObject' => [ 
+                    'copyObject' => [
                             'httpMethod' => 'PUT',
-                            'requestParameters' => [ 
-                                    'ACL' => [ 
+                            'requestParameters' => [
+                                    'ACL' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-acl',
                                             'transform' => 'aclHeader'
                                     ],
-                                    'StorageClass' => [ 
+                                    'StorageClass' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-storage-class',
                                             'transform' => 'storageClass'
                                     ],
-                                    'Bucket' => [ 
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Key' => [ 
+                                    'Key' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'uri'
                                     ],
-                                    'CopySource' => [ 
+                                    'CopySource' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-copy-source'
                                     ],
-                                    'CopySourceIfMatch' => [ 
+                                    'CopySourceIfMatch' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-copy-source-if-match'
                                     ],
-                                    'CopySourceIfModifiedSince' => [ 
+                                    'CopySourceIfModifiedSince' => [
                                             'type' => 'string',
                                             'format' => 'date-time-http',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-copy-source-if-modified-since'
                                     ],
-                                    'CopySourceIfNoneMatch' => [ 
+                                    'CopySourceIfNoneMatch' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-copy-source-if-none-match'
                                     ],
-                                    'CopySourceIfUnmodifiedSince' => [ 
+                                    'CopySourceIfUnmodifiedSince' => [
                                             'type' => 'string',
                                             'format' => 'date-time-http',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-copy-source-if-unmodified-since'
                                     ],
-                                    'MetadataDirective' => [ 
+                                    'MetadataDirective' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-metadata-directive'
                                     ],
-                                    'ContentType' => [ 
+                                    'ContentType' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'content-type'
                                     ],
-                                    'ContentEncoding' => [ 
+                                    'ContentEncoding' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'content-encoding'
                                     ],
-                                    'ContentLanguage' => [ 
+                                    'ContentLanguage' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'content-language'
                                     ],
-                                    'ContentDisposition' => [ 
+                                    'ContentDisposition' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'content-disposition'
                                     ],
-                                    'CacheControl' => [ 
+                                    'CacheControl' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'cache-control'
                                     ],
-                                    'Expires' => [ 
+                                    'Expires' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'expires'
                                     ],
-                                    'Metadata' => [ 
+                                    'Metadata' => [
                                             'type' => 'object',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-meta-'
                                     ],
-                                    'WebsiteRedirectLocation' => [ 
+                                    'WebsiteRedirectLocation' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-website-redirect-location'
                                     ],
-                                    'SseKms' => [ 
+                                    'SseKms' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-server-side-encryption'
                                     ],
-                                    'SseKmsKey' => [ 
+                                    'SseKmsKey' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                     ],
-                                    'SseC' => [ 
+                                    'SseC' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                     ],
-                                    'SseCKey' => [ 
+                                    'SseCKey' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ],
-                                    'CopySourceSseC' => [ 
+                                    'CopySourceSseC' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-copy-source-server-side-encryption-customer-algorithm'
                                     ],
-                                    'CopySourceSseCKey' => [ 
+                                    'CopySourceSseCKey' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-copy-source-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'ETag' => [ 
+                                    'properties' => [
+                                            'ETag' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'LastModified' => [ 
+                                            'LastModified' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'VersionId' => [ 
+                                            'VersionId' => [
                                                     'type' => 'string',
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-version-id'
                                             ],
-                                            'CopySourceVersionId' => [ 
+                                            'CopySourceVersionId' => [
                                                     'type' => 'string',
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-copy-source-version-id'
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ],
-                                            'SseKms' => [ 
+                                            'SseKms' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption'
                                             ],
-                                            'SseKmsKey' => [ 
+                                            'SseKmsKey' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                             ],
-                                            'SseC' => [ 
+                                            'SseC' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                             ],
-                                            'SseCKeyMd5' => [ 
+                                            'SseCKeyMd5' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
                                             ]
@@ -3367,141 +3368,141 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'getObjectMetadata' => [ 
+                    'getObjectMetadata' => [
                             'httpMethod' => 'HEAD',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Key' => [ 
+                                    'Key' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'uri'
                                     ],
-                                    'VersionId' => [ 
+                                    'VersionId' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'versionId'
                                     ],
-                                    'Origin' => [ 
+                                    'Origin' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'Origin'
                                     ],
-                                    'RequestHeader' => [ 
+                                    'RequestHeader' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'Access-Control-Request-Headers'
                                     ],
-                                    'SseC' => [ 
+                                    'SseC' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                     ],
-                                    'SseCKey' => [ 
+                                    'SseCKey' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'Expiration' => [ 
+                                    'properties' => [
+                                            'Expiration' => [
                                                     'type' => 'string',
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-expiration'
                                             ],
-                                            'LastModified' => [ 
+                                            'LastModified' => [
                                                     'type' => 'string',
                                                     'location' => 'header',
                                                     'sentAs' => 'last-modified'
                                             ],
-                                            'ContentLength' => [ 
+                                            'ContentLength' => [
                                                     'type' => 'integer',
                                                     'location' => 'header',
                                                     'sentAs' => 'content-length'
                                             ],
-                                            'ContentType' => [ 
+                                            'ContentType' => [
                                                     'type' => 'string',
                                                     'location' => 'header',
                                                     'sentAs' => 'content-type'
                                             ],
-                                            'ETag' => [ 
+                                            'ETag' => [
                                                     'type' => 'string',
                                                     'location' => 'header'
                                             ],
-                                            'VersionId' => [ 
+                                            'VersionId' => [
                                                     'type' => 'string',
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-version-id'
                                             ],
-                                            'WebsiteRedirectLocation' => [ 
+                                            'WebsiteRedirectLocation' => [
                                                     'type' => 'string',
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-website-redirect-location'
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ],
-                                            'StorageClass' => [ 
+                                            'StorageClass' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-storage-class'
                                             ],
-                                            'AllowOrigin' => [ 
+                                            'AllowOrigin' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'access-control-allow-origin'
                                             ],
-                                            'MaxAgeSeconds' => [ 
+                                            'MaxAgeSeconds' => [
                                                     'type' => 'integer',
                                                     'location' => 'header',
                                                     'sentAs' => 'access-control-max-age'
                                             ],
-                                            'ExposeHeader' => [ 
+                                            'ExposeHeader' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'access-control-expose-headers'
                                             ],
-                                            'AllowMethod' => [ 
+                                            'AllowMethod' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'access-control-allow-methods'
                                             ],
-                                            'AllowHeader' => [ 
+                                            'AllowHeader' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'access-control-allow-headers'
                                             ],
-                                            'Restore' => [ 
+                                            'Restore' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-restore'
                                             ],
-                                            'SseKms' => [ 
+                                            'SseKms' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption'
                                             ],
-                                            'SseKmsKey' => [ 
+                                            'SseKmsKey' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                             ],
-                                            'SseC' => [ 
+                                            'SseC' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                             ],
-                                            'SseCKeyMd5' => [ 
+                                            'SseCKeyMd5' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
                                             ],
-                                            'Metadata' => [ 
+                                            'Metadata' => [
                                                     'location' => 'header',
                                                     'type' => 'object',
                                                     'sentAs' => 'x-obs-meta-'
                                             ],
-                                            'ObjectType' => [ 
+                                            'ObjectType' => [
                                                     'location' => 'header',
                                                     'type' => 'string',
                                                     'sentAs' => 'x-obs-object-type'
                                             ],
-                                            'AppendPosition' => [ 
+                                            'AppendPosition' => [
                                                     'location' => 'header',
                                                     'type' => 'string',
                                                     'sentAs' => 'x-obs-next-append-position'
@@ -3510,103 +3511,103 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'initiateMultipartUpload' => [ 
+                    'initiateMultipartUpload' => [
                             'httpMethod' => 'POST',
                             'specialParam' => 'uploads',
-                            'requestParameters' => [ 
-                                    'ACL' => [ 
+                            'requestParameters' => [
+                                    'ACL' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-acl',
                                             'transform' => 'aclHeader'
                                     ],
-                                    'StorageClass' => [ 
+                                    'StorageClass' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-storage-class',
                                             'transform' => 'storageClass'
                                     ],
-                                    'Bucket' => [ 
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'ContentType' => [ 
+                                    'ContentType' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'Content-Type'
                                     ],
-                                    'Key' => [ 
+                                    'Key' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'uri'
                                     ],
-                                    'Metadata' => [ 
+                                    'Metadata' => [
                                             'type' => 'object',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-meta-'
                                     ],
-                                    'WebsiteRedirectLocation' => [ 
+                                    'WebsiteRedirectLocation' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-website-redirect-location'
                                     ],
-                                    'SseKms' => [ 
+                                    'SseKms' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-server-side-encryption'
                                     ],
-                                    'SseKmsKey' => [ 
+                                    'SseKmsKey' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                     ],
-                                    'SseC' => [ 
+                                    'SseC' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                     ],
-                                    'SseCKey' => [ 
+                                    'SseCKey' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ],
-                                    'Expires' => [ 
+                                    'Expires' => [
                                             'location' => 'header',
                                             'type' => 'string',
                                             'sentAs' => 'x-obs-expires'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'Bucket' => [ 
+                                    'properties' => [
+                                            'Bucket' => [
                                                     'type' => 'string',
                                                     'location' => 'xml',
                                                     'sentAs' => 'Bucket'
                                             ],
-                                            'Key' => [ 
+                                            'Key' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'UploadId' => [ 
+                                            'UploadId' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ],
-                                            'SseKms' => [ 
+                                            'SseKms' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption'
                                             ],
-                                            'SseKmsKey' => [ 
+                                            'SseKmsKey' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                             ],
-                                            'SseC' => [ 
+                                            'SseC' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                             ],
-                                            'SseCKeyMd5' => [ 
+                                            'SseCKeyMd5' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
                                             ]
@@ -3614,116 +3615,116 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'listMultipartUploads' => [ 
+                    'listMultipartUploads' => [
                             'httpMethod' => 'GET',
                             'specialParam' => 'uploads',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Delimiter' => [ 
+                                    'Delimiter' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'delimiter'
                                     ],
-                                    'KeyMarker' => [ 
+                                    'KeyMarker' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'key-marker'
                                     ],
-                                    'MaxUploads' => [ 
+                                    'MaxUploads' => [
                                             'type' => 'numeric',
                                             'location' => 'query',
                                             'sentAs' => 'max-uploads'
                                     ],
-                                    'Prefix' => [ 
+                                    'Prefix' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'prefix'
                                     ],
-                                    'UploadIdMarker' => [ 
+                                    'UploadIdMarker' => [
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'upload-id-marker'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'Bucket' => [ 
+                                    'properties' => [
+                                            'Bucket' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'KeyMarker' => [ 
+                                            'KeyMarker' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'UploadIdMarker' => [ 
+                                            'UploadIdMarker' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'NextKeyMarker' => [ 
+                                            'NextKeyMarker' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'Prefix' => [ 
+                                            'Prefix' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'Delimiter' => [ 
+                                            'Delimiter' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'NextUploadIdMarker' => [ 
+                                            'NextUploadIdMarker' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'MaxUploads' => [ 
+                                            'MaxUploads' => [
                                                     'type' => 'numeric',
                                                     'location' => 'xml'
                                             ],
-                                            'IsTruncated' => [ 
+                                            'IsTruncated' => [
                                                     'type' => 'boolean',
                                                     'location' => 'xml'
                                             ],
-                                            'Uploads' => [ 
+                                            'Uploads' => [
                                                     'type' => 'array',
                                                     'location' => 'xml',
                                                     'sentAs' => 'Upload',
-                                                    'data' => [ 
+                                                    'data' => [
                                                             'xmlFlattened' => true
                                                     ],
-                                                    'items' => [ 
+                                                    'items' => [
                                                             'name' => 'MultipartUpload',
                                                             'type' => 'object',
                                                             'sentAs' => 'Upload',
-                                                            'properties' => [ 
-                                                                    'UploadId' => [ 
+                                                            'properties' => [
+                                                                    'UploadId' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Key' => [ 
+                                                                    'Key' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Initiated' => [ 
+                                                                    'Initiated' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'StorageClass' => [ 
+                                                                    'StorageClass' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Owner' => [ 
+                                                                    'Owner' => [
                                                                             'type' => 'object',
-                                                                            'properties' => [ 
-                                                                                    'ID' => [ 
+                                                                            'properties' => [
+                                                                                    'ID' => [
                                                                                             'type' => 'string'
                                                                                     ]
                                                                             ]
                                                                     ],
-                                                                    'Initiator' => [ 
+                                                                    'Initiator' => [
                                                                             'type' => 'object',
-                                                                            'properties' => [ 
-                                                                                    'ID' => [ 
+                                                                            'properties' => [
+                                                                                    'ID' => [
                                                                                             'type' => 'string'
                                                                                     ]
                                                                             ]
@@ -3731,23 +3732,23 @@ class OBSRequestResource {
                                                             ]
                                                     ]
                                             ],
-                                            'CommonPrefixes' => [ 
+                                            'CommonPrefixes' => [
                                                     'type' => 'array',
                                                     'location' => 'xml',
-                                                    'data' => [ 
+                                                    'data' => [
                                                             'xmlFlattened' => true
                                                     ],
-                                                    'items' => [ 
+                                                    'items' => [
                                                             'name' => 'CommonPrefix',
                                                             'type' => 'object',
-                                                            'properties' => [ 
-                                                                    'Prefix' => [ 
+                                                            'properties' => [
+                                                                    'Prefix' => [
                                                                             'type' => 'string'
                                                                     ]
                                                             ]
                                                     ]
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -3755,30 +3756,30 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'abortMultipartUpload' => [ 
+                    'abortMultipartUpload' => [
                             'httpMethod' => 'DELETE',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Key' => [ 
+                                    'Key' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'uri'
                                     ],
-                                    'UploadId' => [ 
+                                    'UploadId' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'uploadId'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'RequestId' => [ 
+                                    'properties' => [
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -3786,91 +3787,91 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'uploadPart' => [ 
+                    'uploadPart' => [
                             'httpMethod' => 'PUT',
-                            'requestParameters' => [ 
-                                    'Body' => [ 
+                            'requestParameters' => [
+                                    'Body' => [
                                             'type' => 'stream',
                                             'location' => 'body'
                                     ],
-                                    'SourceFile' => [ 
+                                    'SourceFile' => [
                                             'type' => 'file',
                                             'location' => 'body'
                                     ],
-                                    'Bucket' => [ 
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Key' => [ 
+                                    'Key' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'uri'
                                     ],
-                                    'PartNumber' => [ 
+                                    'PartNumber' => [
                                             'required' => true,
                                             'type' => 'numeric',
                                             'location' => 'query',
                                             'sentAs' => 'partNumber'
                                     ],
-                                    'UploadId' => [ 
+                                    'UploadId' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'uploadId'
                                     ],
-                                    'Offset' => [ 
+                                    'Offset' => [
                                             'type' => 'numeric',
                                             'location' => 'response'
                                     ],
-                                    'PartSize' => [ 
+                                    'PartSize' => [
                                             'type' => 'numeric',
                                             'location' => 'response'
                                     ],
-                                    'ContentMD5' => [ 
+                                    'ContentMD5' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'Content-MD5'
                                     ],
-                                    'ContentType' => [ 
+                                    'ContentType' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'Content-Type'
                                     ],
-                                    'SseC' => [ 
+                                    'SseC' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                     ],
-                                    'SseCKey' => [ 
+                                    'SseCKey' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'ETag' => [ 
+                                    'properties' => [
+                                            'ETag' => [
                                                     'type' => 'string',
                                                     'location' => 'header'
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ],
-                                            'SseKms' => [ 
+                                            'SseKms' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption'
                                             ],
-                                            'SseKmsKey' => [ 
+                                            'SseKmsKey' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                             ],
-                                            'SseC' => [ 
+                                            'SseC' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                             ],
-                                            'SseCKeyMd5' => [ 
+                                            'SseCKeyMd5' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
                                             ]
@@ -3878,96 +3879,96 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'completeMultipartUpload' => [ 
+                    'completeMultipartUpload' => [
                             'httpMethod' => 'POST',
-                            'data' => [ 
-                                    'xmlRoot' => [ 
+                            'data' => [
+                                    'xmlRoot' => [
                                             'name' => 'CompleteMultipartUpload'
                                     ]
                             ],
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Key' => [ 
+                                    'Key' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'uri'
                                     ],
-                                    'Parts' => [ 
+                                    'Parts' => [
                                             'type' => 'array',
                                             'location' => 'xml',
-                                            'data' => [ 
+                                            'data' => [
                                                     'xmlFlattened' => true
                                             ],
-                                            'items' => [ 
+                                            'items' => [
                                                     'name' => 'CompletedPart',
                                                     'type' => 'object',
                                                     'sentAs' => 'Part',
-                                                    'properties' => [ 
-                                                            'PartNumber' => [ 
+                                                    'properties' => [
+                                                            'PartNumber' => [
                                                                     'type' => 'numeric'
                                                             ],
-                                                            'ETag' => [ 
+                                                            'ETag' => [
                                                                     'type' => 'string'
                                                             ]
                                                     ]
                                             ]
                                     ],
-                                    'UploadId' => [ 
+                                    'UploadId' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'uploadId'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'Location' => [ 
+                                    'properties' => [
+                                            'Location' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'Bucket' => [ 
+                                            'Bucket' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'Key' => [ 
+                                            'Key' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'Location' => [ 
+                                            'Location' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'ETag' => [ 
+                                            'ETag' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'VersionId' => [ 
+                                            'VersionId' => [
                                                     'type' => 'string',
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-version-id'
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ],
-                                            'SseKms' => [ 
+                                            'SseKms' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption'
                                             ],
-                                            'SseKmsKey' => [ 
+                                            'SseKmsKey' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                             ],
-                                            'SseC' => [ 
+                                            'SseC' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                             ],
-                                            'SseCKeyMd5' => [ 
+                                            'SseCKeyMd5' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
                                             ]
@@ -3975,117 +3976,117 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'listParts' => [ 
+                    'listParts' => [
                             'httpMethod' => 'GET',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'Key' => [ 
+                                    'Key' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'uri'
                                     ],
-                                    'MaxParts' => [ 
+                                    'MaxParts' => [
                                             'type' => 'numeric',
                                             'location' => 'query',
                                             'sentAs' => 'max-parts'
                                     ],
-                                    'PartNumberMarker' => [ 
+                                    'PartNumberMarker' => [
                                             'type' => 'numeric',
                                             'location' => 'query',
                                             'sentAs' => 'part-number-marker'
                                     ],
-                                    'UploadId' => [ 
+                                    'UploadId' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'uploadId'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'Bucket' => [ 
+                                    'properties' => [
+                                            'Bucket' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'Key' => [ 
+                                            'Key' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'UploadId' => [ 
+                                            'UploadId' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'PartNumberMarker' => [ 
+                                            'PartNumberMarker' => [
                                                     'type' => 'numeric',
                                                     'location' => 'xml'
                                             ],
-                                            'NextPartNumberMarker' => [ 
+                                            'NextPartNumberMarker' => [
                                                     'type' => 'numeric',
                                                     'location' => 'xml'
                                             ],
-                                            'MaxParts' => [ 
+                                            'MaxParts' => [
                                                     'type' => 'numeric',
                                                     'location' => 'xml'
                                             ],
-                                            'IsTruncated' => [ 
+                                            'IsTruncated' => [
                                                     'type' => 'boolean',
                                                     'location' => 'xml'
                                             ],
-                                            'Parts' => [ 
+                                            'Parts' => [
                                                     'type' => 'array',
                                                     'location' => 'xml',
                                                     'sentAs' => 'Part',
-                                                    'data' => [ 
+                                                    'data' => [
                                                             'xmlFlattened' => true
                                                     ],
-                                                    'items' => [ 
+                                                    'items' => [
                                                             'name' => 'Part',
                                                             'type' => 'object',
                                                             'sentAs' => 'Part',
-                                                            'properties' => [ 
-                                                                    'PartNumber' => [ 
+                                                            'properties' => [
+                                                                    'PartNumber' => [
                                                                             'type' => 'integer'
                                                                     ],
-                                                                    'LastModified' => [ 
+                                                                    'LastModified' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'ETag' => [ 
+                                                                    'ETag' => [
                                                                             'type' => 'string'
                                                                     ],
-                                                                    'Size' => [ 
+                                                                    'Size' => [
                                                                             'type' => 'integer'
                                                                     ]
                                                             ]
                                                     ]
                                             ],
-                                            'Initiator' => [ 
+                                            'Initiator' => [
                                                     'type' => 'object',
                                                     'location' => 'xml',
-                                                    'properties' => [ 
-                                                            'ID' => [ 
+                                                    'properties' => [
+                                                            'ID' => [
                                                                     'type' => 'string'
                                                             ]
                                                     ]
                                             ],
-                                            'Owner' => [ 
+                                            'Owner' => [
                                                     'type' => 'object',
                                                     'location' => 'xml',
-                                                    'properties' => [ 
-                                                            'ID' => [ 
+                                                    'properties' => [
+                                                            'ID' => [
                                                                     'type' => 'string'
                                                             ]
                                                     ]
                                             ],
-                                            'StorageClass' => [ 
+                                            'StorageClass' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ]
@@ -4093,89 +4094,89 @@ class OBSRequestResource {
                             ]
                     ],
 
-                    'copyPart' => [ 
+                    'copyPart' => [
                             'httpMethod' => 'PUT',
-                            'requestParameters' => [ 
-                                    'Bucket' => [ 
+                            'requestParameters' => [
+                                    'Bucket' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'dns'
                                     ],
-                                    'CopySource' => [ 
+                                    'CopySource' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-copy-source'
                                     ],
-                                    'CopySourceRange' => [ 
+                                    'CopySourceRange' => [
                                             'type' => 'string',
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-copy-source-range'
                                     ],
-                                    'Key' => [ 
+                                    'Key' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'uri'
                                     ],
-                                    'PartNumber' => [ 
+                                    'PartNumber' => [
                                             'required' => true,
                                             'type' => 'numeric',
                                             'location' => 'query',
                                             'sentAs' => 'partNumber'
                                     ],
-                                    'UploadId' => [ 
+                                    'UploadId' => [
                                             'required' => true,
                                             'type' => 'string',
                                             'location' => 'query',
                                             'sentAs' => 'uploadId'
                                     ],
-                                    'SseC' => [ 
+                                    'SseC' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                     ],
-                                    'SseCKey' => [ 
+                                    'SseCKey' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ],
-                                    'CopySourceSseC' => [ 
+                                    'CopySourceSseC' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-copy-source-server-side-encryption-customer-algorithm'
                                     ],
-                                    'CopySourceSseCKey' => [ 
+                                    'CopySourceSseCKey' => [
                                             'location' => 'header',
                                             'sentAs' => 'x-obs-copy-source-server-side-encryption-customer-key',
                                             'type' => 'password'
                                     ]
                             ],
-                            'responseParameters' => [ 
+                            'responseParameters' => [
                                     'type' => 'object',
-                                    'properties' => [ 
-                                            'ETag' => [ 
+                                    'properties' => [
+                                            'ETag' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'LastModified' => [ 
+                                            'LastModified' => [
                                                     'type' => 'string',
                                                     'location' => 'xml'
                                             ],
-                                            'RequestId' => [ 
+                                            'RequestId' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-request-id'
                                             ],
-                                            'SseKms' => [ 
+                                            'SseKms' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption'
                                             ],
-                                            'SseKmsKey' => [ 
+                                            'SseKmsKey' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-aws-kms-key-id'
                                             ],
-                                            'SseC' => [ 
+                                            'SseC' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-customer-algorithm'
                                             ],
-                                            'SseCKeyMd5' => [ 
+                                            'SseCKeyMd5' => [
                                                     'location' => 'header',
                                                     'sentAs' => 'x-obs-server-side-encryption-customer-key-MD5'
                                             ]
@@ -4184,7 +4185,7 @@ class OBSRequestResource {
                     ]
             ],
 
-            'aliases' => [ 
+            'aliases' => [
                     'headBucket' => 'getBucketMetadata',
 
                     'getBucketLogging' => 'getBucketLoggingConfiguration',

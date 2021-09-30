@@ -30,7 +30,6 @@ use GuzzleHttp\Handler\Proxy;
 use GuzzleHttp\Promise\Promise;
 use Obs\Internal\Resource\Constants;
 
-
 define('DEBUG', Logger::DEBUG);
 define('INFO', Logger::INFO);
 define('NOTICE', Logger::NOTICE);
@@ -170,246 +169,254 @@ define('EMERGENCY', Logger::EMERGENCY);
 class ObsClient
 {
 
-	const SDK_VERSION = '3.21.6';
+    const SDK_VERSION = '3.21.6';
 
-	const AclPrivate = 'private';
-	const AclPublicRead = 'public-read';
-	const AclPublicReadWrite = 'public-read-write';
-	const AclPublicReadDelivered = 'public-read-delivered';
-	const AclPublicReadWriteDelivered = 'public-read-write-delivered';
+    const AclPrivate = 'private';
+    const AclPublicRead = 'public-read';
+    const AclPublicReadWrite = 'public-read-write';
+    const AclPublicReadDelivered = 'public-read-delivered';
+    const AclPublicReadWriteDelivered = 'public-read-write-delivered';
 
-	const AclAuthenticatedRead = 'authenticated-read';
-	const AclBucketOwnerRead = 'bucket-owner-read';
-	const AclBucketOwnerFullControl = 'bucket-owner-full-control';
-	const AclLogDeliveryWrite = 'log-delivery-write';
+    const AclAuthenticatedRead = 'authenticated-read';
+    const AclBucketOwnerRead = 'bucket-owner-read';
+    const AclBucketOwnerFullControl = 'bucket-owner-full-control';
+    const AclLogDeliveryWrite = 'log-delivery-write';
 
-	const StorageClassStandard = 'STANDARD';
-	const StorageClassWarm = 'WARM';
-	const StorageClassCold = 'COLD';
+    const StorageClassStandard = 'STANDARD';
+    const StorageClassWarm = 'WARM';
+    const StorageClassCold = 'COLD';
 
-	const PermissionRead = 'READ';
-	const PermissionWrite = 'WRITE';
-	const PermissionReadAcp = 'READ_ACP';
-	const PermissionWriteAcp = 'WRITE_ACP';
-	const PermissionFullControl = 'FULL_CONTROL';
+    const PermissionRead = 'READ';
+    const PermissionWrite = 'WRITE';
+    const PermissionReadAcp = 'READ_ACP';
+    const PermissionWriteAcp = 'WRITE_ACP';
+    const PermissionFullControl = 'FULL_CONTROL';
 
-	const AllUsers = 'Everyone';
+    const AllUsers = 'Everyone';
 
-	const GroupAllUsers = 'AllUsers';
-	const GroupAuthenticatedUsers = 'AuthenticatedUsers';
-	const GroupLogDelivery = 'LogDelivery';
+    const GroupAllUsers = 'AllUsers';
+    const GroupAuthenticatedUsers = 'AuthenticatedUsers';
+    const GroupLogDelivery = 'LogDelivery';
 
-	const RestoreTierExpedited = 'Expedited';
-	const RestoreTierStandard = 'Standard';
-	const RestoreTierBulk = 'Bulk';
+    const RestoreTierExpedited = 'Expedited';
+    const RestoreTierStandard = 'Standard';
+    const RestoreTierBulk = 'Bulk';
 
-	const GranteeGroup = 'Group';
-	const GranteeUser = 'CanonicalUser';
+    const GranteeGroup = 'Group';
+    const GranteeUser = 'CanonicalUser';
 
-	const CopyMetadata = 'COPY';
-	const ReplaceMetadata = 'REPLACE';
+    const CopyMetadata = 'COPY';
+    const ReplaceMetadata = 'REPLACE';
 
-	const SignatureV2 = 'v2';
-	const SignatureV4 = 'v4';
-	const SigantureObs = 'obs';
+    const SignatureV2 = 'v2';
+    const SignatureV4 = 'v4';
+    const SigantureObs = 'obs';
 
-	const ObjectCreatedAll = 'ObjectCreated:*';
-	const ObjectCreatedPut = 'ObjectCreated:Put';
-	const ObjectCreatedPost = 'ObjectCreated:Post';
-	const ObjectCreatedCopy = 'ObjectCreated:Copy';
-	const ObjectCreatedCompleteMultipartUpload = 'ObjectCreated:CompleteMultipartUpload';
-	const ObjectRemovedAll = 'ObjectRemoved:*';
-	const ObjectRemovedDelete = 'ObjectRemoved:Delete';
-	const ObjectRemovedDeleteMarkerCreated = 'ObjectRemoved:DeleteMarkerCreated';
+    const ObjectCreatedAll = 'ObjectCreated:*';
+    const ObjectCreatedPut = 'ObjectCreated:Put';
+    const ObjectCreatedPost = 'ObjectCreated:Post';
+    const ObjectCreatedCopy = 'ObjectCreated:Copy';
+    const ObjectCreatedCompleteMultipartUpload = 'ObjectCreated:CompleteMultipartUpload';
+    const ObjectRemovedAll = 'ObjectRemoved:*';
+    const ObjectRemovedDelete = 'ObjectRemoved:Delete';
+    const ObjectRemovedDeleteMarkerCreated = 'ObjectRemoved:DeleteMarkerCreated';
 
-	use Internal\SendRequestTrait;
-	use Internal\GetResponseTrait;
+    use Internal\SendRequestTrait;
+    use Internal\GetResponseTrait;
 
-	private $factorys;
+    private $factorys;
 
-	public function __construct(array $config = []){
-		$this ->factorys = [];
+    public function __construct(array $config = [])
+    {
+        $this ->factorys = [];
 
-		$this -> ak = strval($config['key']);
-		$this -> sk = strval($config['secret']);
+        $this -> ak = strval($config['key']);
+        $this -> sk = strval($config['secret']);
 
-		if(isset($config['security_token'])){
-		    $this -> securityToken = strval($config['security_token']);
-		}
-
-		if(isset($config['endpoint'])){
-			$this -> endpoint = trim(strval($config['endpoint']));
-		}
-
-		if($this -> endpoint === ''){
-			throw new \RuntimeException('endpoint is not set');
-		}
-
-		while($this -> endpoint[strlen($this -> endpoint)-1] === '/'){
-			$this -> endpoint = substr($this -> endpoint, 0, strlen($this -> endpoint)-1);
-		}
-
-		if(strpos($this-> endpoint, 'http') !== 0){
-			$this -> endpoint = 'https://' . $this -> endpoint;
-		}
-
-		if(isset($config['signature'])){
-		    $this -> signature = strval($config['signature']);
-		}
-
-		if(isset($config['path_style'])){
-			$this -> pathStyle = $config['path_style'];
-		}
-
-		if(isset($config['region'])){
-			$this -> region = strval($config['region']);
-		}
-
-		if(isset($config['ssl_verify'])){
-			$this -> sslVerify = $config['ssl_verify'];
-		}else if(isset($config['ssl.certificate_authority'])){
-			$this -> sslVerify = $config['ssl.certificate_authority'];
-		}
-
-		if(isset($config['max_retry_count'])){
-			$this -> maxRetryCount = intval($config['max_retry_count']);
-		}
-
-		if(isset($config['timeout'])){
-			$this -> timeout = intval($config['timeout']);
-		}
-
-		if(isset($config['socket_timeout'])){
-			$this -> socketTimeout = intval($config['socket_timeout']);
-		}
-
-		if(isset($config['connect_timeout'])){
-			$this -> connectTimeout = intval($config['connect_timeout']);
-		}
-
-		if(isset($config['chunk_size'])){
-			$this -> chunkSize = intval($config['chunk_size']);
-		}
-
-		if(isset($config['exception_response_mode'])){
-			$this -> exceptionResponseMode = $config['exception_response_mode'];
-		}
-
-		if (isset($config['is_cname'])) {
-		    $this -> isCname = $config['is_cname'];
+        if (isset($config['securityToken'])) {
+            $this -> securityToken = strval($config['securityToken']);
         }
 
-		$host = parse_url($this -> endpoint)['host'];
-		if(filter_var($host, FILTER_VALIDATE_IP) !== false) {
-		    $this -> pathStyle = true;
-		}
+        if (isset($config['endpoint'])) {
+            $this -> endpoint = trim(strval($config['endpoint']));
+        }
 
-		$handler = self::choose_handler($this);
+        if ($this -> endpoint === '') {
+            throw new \RuntimeException('endpoint is not set');
+        }
 
-		$this -> httpClient = new Client(
-				[
-						'timeout' => 0,
-						'read_timeout' => $this -> socketTimeout,
-						'connect_timeout' => $this -> connectTimeout,
-						'allow_redirects' => false,
-						'verify' => $this -> sslVerify,
-						'expect' => false,
-						'handler' => HandlerStack::create($handler),
-						'curl' => [
-								CURLOPT_BUFFERSIZE => $this -> chunkSize
-						]
-				]
-		);
+        while ($this -> endpoint[strlen($this -> endpoint) - 1] === '/') {
+            $this -> endpoint = substr($this -> endpoint, 0, strlen($this -> endpoint) - 1);
+        }
 
-	}
+        if (strpos($this-> endpoint, 'http') !== 0) {
+            $this -> endpoint = 'https://' . $this -> endpoint;
+        }
 
-	public function __destruct(){
-		$this-> close();
-	}
+        if (isset($config['signature'])) {
+            $this -> signature = strval($config['signature']);
+        }
 
-	public function refresh($key, $secret, $security_token=false){
-	    $this -> ak = strval($key);
-	    $this -> sk = strval($secret);
-	    if($security_token){
-	        $this -> securityToken = strval($security_token);
-	    }
-	}
+        if (isset($config['path_style'])) {
+            $this -> pathStyle = $config['path_style'];
+        }
 
-	/**
-	 * Get the default User-Agent string to use with Guzzle
-	 *
-	 * @return string
-	 */
-	private static function default_user_agent()
-	{
-		static $defaultAgent = '';
-		if (!$defaultAgent) {
-			$defaultAgent = 'obs-sdk-php/' . self::SDK_VERSION;
-		}
+        if (isset($config['region'])) {
+            $this -> region = strval($config['region']);
+        }
 
-		return $defaultAgent;
-	}
+        if (isset($config['ssl_verify'])) {
+            $this -> sslVerify = $config['ssl_verify'];
+        } elseif (isset($config['ssl.certificate_authority'])) {
+            $this -> sslVerify = $config['ssl.certificate_authority'];
+        }
 
-	/**
-	 * Factory method to create a new Obs client using an array of configuration options.
-	 *
-	 * @param array $config Client configuration data
-	 *
-	 * @return ObsClient
-	 */
-	public static function factory(array $config = [])
-	{
-		return new ObsClient($config);
-	}
+        if (isset($config['max_retry_count'])) {
+            $this -> maxRetryCount = intval($config['max_retry_count']);
+        }
 
-	public function close(){
-		if($this->factorys){
-			foreach ($this->factorys as $factory){
-				$factory->close();
-			}
-		}
-	}
+        if (isset($config['timeout'])) {
+            $this -> timeout = intval($config['timeout']);
+        }
 
-	public function initLog(array $logConfig= [])
-	{
-		ObsLog::initLog($logConfig);
+        if (isset($config['socket_timeout'])) {
+            $this -> socketTimeout = intval($config['socket_timeout']);
+        }
 
-		$msg = [];
-		$msg[] = '[OBS SDK Version=' . self::SDK_VERSION;
-		$msg[] = 'Endpoint=' . $this->endpoint;
-		$msg[] = 'Access Mode=' . ($this->pathStyle ? 'Path' : 'Virtual Hosting').']';
+        if (isset($config['connect_timeout'])) {
+            $this -> connectTimeout = intval($config['connect_timeout']);
+        }
 
-		ObsLog::commonLog(WARNING, implode("];[", $msg));
-	}
+        if (isset($config['chunk_size'])) {
+            $this -> chunkSize = intval($config['chunk_size']);
+        }
 
-	private static function choose_handler($obsclient)
-	{
-		$handler = null;
-		if (function_exists('curl_multi_exec') && function_exists('curl_exec')) {
-			$f1 = new SdkCurlFactory(50);
-			$f2 = new SdkCurlFactory(3);
-			$obsclient->factorys[] = $f1;
-			$obsclient->factorys[] = $f2;
-			$handler = Proxy::wrapSync(new CurlMultiHandler(['handle_factory' => $f1]), new CurlHandler(['handle_factory' => $f2]));
-		} elseif (function_exists('curl_exec')) {
-			$f = new SdkCurlFactory(3);
-			$obsclient->factorys[] = $f;
-			$handler = new CurlHandler(['handle_factory' => $f]);
-		} elseif (function_exists('curl_multi_exec')) {
-			$f = new SdkCurlFactory(50);
-			$obsclient->factorys[] = $f;
-			$handler = new CurlMultiHandler(['handle_factory' => $f1]);
-		}
+        if (isset($config['exception_response_mode'])) {
+            $this -> exceptionResponseMode = $config['exception_response_mode'];
+        }
 
-		if (ini_get('allow_url_fopen')) {
-			$handler = $handler
-			? Proxy::wrapStreaming($handler, new SdkStreamHandler())
-			: new SdkStreamHandler();
-		} elseif (!$handler) {
-			throw new \RuntimeException('GuzzleHttp requires cURL, the '
-					. 'allow_url_fopen ini setting, or a custom HTTP handler.');
-		}
+        if (isset($config['is_cname'])) {
+            $this -> isCname = $config['is_cname'];
+        }
 
-		return $handler;
-	}
+        $host = parse_url($this -> endpoint)['host'];
+        if (filter_var($host, FILTER_VALIDATE_IP) !== false) {
+            $this -> pathStyle = true;
+        }
+
+        $handler = self::chooseHandler($this);
+
+        $this -> httpClient = new Client(
+            [
+                        'timeout' => 0,
+                        'read_timeout' => $this -> socketTimeout,
+                        'connect_timeout' => $this -> connectTimeout,
+                        'allow_redirects' => false,
+                        'verify' => $this -> sslVerify,
+                        'expect' => false,
+                        'handler' => HandlerStack::create($handler),
+                        'curl' => [
+                                CURLOPT_BUFFERSIZE => $this -> chunkSize
+                        ]
+                ]
+        );
+    }
+
+    public function __destruct()
+    {
+        $this-> close();
+    }
+
+    public function refresh($key, $secret, $securityToken = false)
+    {
+        $this -> ak = strval($key);
+        $this -> sk = strval($secret);
+        if ($securityToken) {
+            $this -> securityToken = strval($securityToken);
+        }
+    }
+
+    /**
+     * Get the default User-Agent string to use with Guzzle
+     *
+     * @return string
+     */
+    private static function defaultUserAgent()
+    {
+        static $defaultAgent = '';
+        if (!$defaultAgent) {
+            $defaultAgent = 'obs-sdk-php/' . self::SDK_VERSION;
+        }
+
+        return $defaultAgent;
+    }
+
+    /**
+     * Factory method to create a new Obs client using an array of configuration options.
+     *
+     * @param array $config Client configuration data
+     *
+     * @return ObsClient
+     */
+    public static function factory(array $config = [])
+    {
+        return new ObsClient($config);
+    }
+
+    public function close()
+    {
+        if ($this->factorys) {
+            foreach ($this->factorys as $factory) {
+                $factory->close();
+            }
+        }
+    }
+
+    public function initLog(array $logConfig = [])
+    {
+        ObsLog::initLog($logConfig);
+
+        $msg = [];
+        $msg[] = '[OBS SDK Version=' . self::SDK_VERSION;
+        $msg[] = 'Endpoint=' . $this->endpoint;
+        $msg[] = 'Access Mode=' . ($this->pathStyle ? 'Path' : 'Virtual Hosting') . ']';
+
+        ObsLog::commonLog(WARNING, implode('];[', $msg));
+    }
+
+    private static function chooseHandler($obsclient)
+    {
+        $handler = null;
+        if (function_exists('curl_multi_exec') && function_exists('curl_exec')) {
+            $f1 = new SdkCurlFactory(50);
+            $f2 = new SdkCurlFactory(3);
+            $obsclient->factorys[] = $f1;
+            $obsclient->factorys[] = $f2;
+            $handler = Proxy::wrapSync(
+                new CurlMultiHandler(['handle_factory' => $f1]),
+                new CurlHandler(['handle_factory' => $f2])
+            );
+        } elseif (function_exists('curl_exec')) {
+            $f = new SdkCurlFactory(3);
+            $obsclient->factorys[] = $f;
+            $handler = new CurlHandler(['handle_factory' => $f]);
+        } elseif (function_exists('curl_multi_exec')) {
+            $f = new SdkCurlFactory(50);
+            $obsclient->factorys[] = $f;
+            $handler = new CurlMultiHandler(['handle_factory' => $f1]);
+        }
+
+        if (ini_get('allow_url_fopen')) {
+            $handler = $handler
+            ? Proxy::wrapStreaming($handler, new SdkStreamHandler())
+            : new SdkStreamHandler();
+        } elseif (!$handler) {
+            throw new \RuntimeException(
+                'GuzzleHttp requires cURL, the '
+                    . 'allow_url_fopen ini setting, or a custom HTTP handler.'
+            );
+        }
+
+        return $handler;
+    }
 }

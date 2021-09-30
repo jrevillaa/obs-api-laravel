@@ -17,7 +17,8 @@
 
 namespace Obs\Internal\Resource;
 
-class OBSConstants extends Constants {
+class OBSConstants extends Constants
+{
     const FLAG = 'OBS';
     const METADATA_PREFIX = 'x-obs-meta-';
     const HEADER_PREFIX = 'x-obs-';

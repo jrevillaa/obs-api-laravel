@@ -17,34 +17,33 @@
 
 namespace Obs\Internal\Common;
 
-
 class SchemaFormatter
 {
     protected static $utcTimeZone;
 
     public static function format($fmt, $value)
-    {   
-        if($fmt === 'date-time'){
+    {
+        if ($fmt === 'date-time') {
             return self::formatDateTime($value);
         }
         
-        if($fmt === 'data-time-http'){
+        if ($fmt === 'data-time-http') {
             return self::formatDateTimeHttp($value);
         }
         
-        if($fmt === 'data-time-middle'){
+        if ($fmt === 'data-time-middle') {
             return self::formatDateTimeMiddle($value);
         }
         
-        if($fmt === 'date'){
+        if ($fmt === 'date') {
             return self::formatDate($value);
         }
         
-        if($fmt === 'timestamp'){
+        if ($fmt === 'timestamp') {
             return self::formatTimestamp($value);
         }
         
-        if($fmt === 'boolean-string'){
+        if ($fmt === 'boolean-string') {
             return self::formatBooleanAsString($value);
         }
         
@@ -53,14 +52,14 @@ class SchemaFormatter
     
     public static function formatDateTimeMiddle($dateTime)
     {
-    	if (is_string($dateTime)) {
-    		$dateTime = new \DateTime($dateTime);
-    	}
-    	
-    	if ($dateTime instanceof \DateTime) {
-    		return $dateTime -> format('Y-m-d\T00:00:00\Z');
-    	}
-    	return null;
+        if (is_string($dateTime)) {
+            $dateTime = new \DateTime($dateTime);
+        }
+        
+        if ($dateTime instanceof \DateTime) {
+            return $dateTime -> format('Y-m-d\T00:00:00\Z');
+        }
+        return null;
     }
 
     public static function formatDateTime($value)

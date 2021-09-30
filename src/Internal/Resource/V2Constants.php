@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Copyright 2019 Huawei Technologies Co.,Ltd.
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use
@@ -16,7 +17,8 @@
 
 namespace Obs\Internal\Resource;
 
-class V2Constants extends Constants {
+class V2Constants extends Constants
+{
     const FLAG = 'AWS';
     const METADATA_PREFIX = 'x-amz-meta-';
     const HEADER_PREFIX = 'x-amz-';

@@ -23,9 +23,8 @@ use Obs\Log\ObsLog;
 
 class ObsException extends \RuntimeException
 {
-	const CLIENT = 'client';
-
-	const SERVER = 'server';
+    const CLIENT = 'client';
+    const SERVER = 'server';
 
     private $response;
 
@@ -41,9 +40,9 @@ class ObsException extends \RuntimeException
 
     private $hostId;
 
-    public function __construct ($message = null, $code = null, $previous = null)
+    public function __construct($message = null, $code = null, $previous = null)
     {
-    	parent::__construct($message, $code, $previous);
+        parent::__construct($message, $code, $previous);
     }
 
     public function setExceptionCode($exceptionCode)
@@ -63,7 +62,7 @@ class ObsException extends \RuntimeException
 
     public function getExceptionMessage()
     {
-    	return $this->exceptionMessage ? $this->exceptionMessage : $this->message;
+        return $this->exceptionMessage ? $this->exceptionMessage : $this->message;
     }
 
     public function setExceptionType($exceptionType)
@@ -111,12 +110,14 @@ class ObsException extends \RuntimeException
         return $this->response ? $this->response->getStatusCode() : -1;
     }
 
-    public function setHostId($hostId){
-    	$this->hostId = $hostId;
+    public function setHostId($hostId)
+    {
+        $this->hostId = $hostId;
     }
 
-    public function getHostId(){
-    	return $this->hostId;
+    public function getHostId()
+    {
+        return $this->hostId;
     }
 
     public function __toString()
@@ -125,7 +126,8 @@ class ObsException extends \RuntimeException
             . 'OBS Error Code: ' . $this->getExceptionCode() . ', '
             . 'Status Code: ' . $this->getStatusCode() . ', '
             . 'OBS Error Type: ' . $this->getExceptionType() . ', '
-            . 'OBS Error Message: ' . ($this->getExceptionMessage() ? $this->getExceptionMessage():$this->getMessage());
+            . 'OBS Error Message: '
+            . ($this->getExceptionMessage() ? $this->getExceptionMessage() : $this->getMessage());
 
         // Add the User-Agent if available
         if ($this->request) {
@@ -133,8 +135,12 @@ class ObsException extends \RuntimeException
         }
         $message .= "\n";
 
-        ObsLog::commonLog(INFO, "http request:status:%d, %s",$this->getStatusCode(),"code:".$this->getExceptionCode().", message:".$this->getMessage());
+        ObsLog::commonLog(
+            INFO,
+            'http request:status:%d, %s',
+            $this->getStatusCode(),
+            'code:' . $this->getExceptionCode() . ', message:' . $this->getMessage()
+        );
         return $message;
     }
-
 }
